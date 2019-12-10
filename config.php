@@ -7,5 +7,8 @@ return [
         'charset' => 'utf8',
         'username' => 'root',
         'password' => '',
+    ],
+    [
+        'baseDir' => 'ROOT'
     ]
 ];
