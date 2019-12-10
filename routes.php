@@ -4,7 +4,7 @@ $routes = [
     "/" => "/View/home",
     "/add" => "/View/add",
     "/store" => "/store",
-    "/update" => "/update",
+    "/update" => "/update"
 ];
 if(isset($_GET["id"]))
 {
@@ -13,6 +13,7 @@ if(isset($_GET["id"]))
         "/show?id={$_GET["id"]}" => "/View/show",
         "/edit?id={$_GET["id"]}" => "/View/edit",
         "/delete?id={$_GET["id"]}" => "/delete",
+        "/update/?id={$_GET["id"]}" => "/update"
 
     ];
 }

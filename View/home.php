@@ -48,7 +48,7 @@
 
                         <td>
                             <a href="/edit?id=<?php echo $post['id']; ?>" class="btn btn-warning">EDIT</a>
-                            <a href="/delete?id=<?php echo $post['id']; ?>" class="btn btn-danger">DELETE</a>
+                            <a href="/delete?id=<?php echo $post['id']; ?>" onclick="return confirm('Are you sure?')" class="btn btn-danger">DELETE</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

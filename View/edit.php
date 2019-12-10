@@ -34,10 +34,7 @@ $id = $_GET['id'];
         <div class="col-md-8 offset-2">
             <h1>Create Task</h1>
 
-            <form action="/update" method="post">
-                <div class="form-group">
-                    <input type="hidden" class="form-control"  name="id" value="<?php echo $post['id'] ?>">
-                </div>
+            <form action="/update/?id=<?php echo $post['id'] ?>" method="post">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Title</label>
                     <input type="text" class="form-control" id="exampleInputEmail1" name="title" value="<?php echo $post['title'] ?>" aria-describedby="emailHelp">
