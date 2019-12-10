@@ -26,7 +26,7 @@
     </div>
 </nav>
 
-<div class="conteiner">
+<div class="container">
     <div class="row">
         <div class="col-md-8 offset-2">
             <table class="table">
@@ -44,7 +44,7 @@
                     <tr>
                         <th scope="row"><?php echo $post['id']; ?></th>
 
-                        <td width="700"><a href="/show?id=<?php echo $post['id']; ?>"><?php echo $post['title']; ?> </a></td>
+                        <td width="600"><a href="/show?id=<?php echo $post['id']; ?>"><?php echo $post['title']; ?> </a></td>
 
                         <td>
                             <a href="/edit?id=<?php echo $post['id']; ?>" class="btn btn-warning">EDIT</a>
