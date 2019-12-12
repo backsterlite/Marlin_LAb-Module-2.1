@@ -1,5 +1,7 @@
 {
     "require": {
-        "aura/sqlquery": "^2.7"
+        "aura/sqlquery": "^2.7",
+        "league/plates": "3.*",
+        "tamtamchik/simple-flash": "^1.2"
     }
 }

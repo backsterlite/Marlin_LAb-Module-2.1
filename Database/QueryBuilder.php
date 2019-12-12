@@ -28,6 +28,12 @@ class QueryBuilder
     //add one note
     public function store($table, $data)
     {
+        if($data['title'] == '' || $data['content'] == '')
+        {
+            flash()->error('Заполните поля');
+            header('Location: /add');
+            exit;
+        }
         $insert = $this->queryFactory->newInsert();
         $insert->into($table)
                 ->cols($data);

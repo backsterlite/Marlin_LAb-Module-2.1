@@ -29,6 +29,7 @@
 <div class="conteiner">
     <div class="row">
         <div class="col-md-8 offset-2">
+            <?php echo flash();?>
             <table class="table">
                 <thead>
                 <tr>

@@ -29,6 +29,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 offset-2">
+            <?php echo flash()->display(); ?>
             <h1>Create Task</h1>
 
             <form action="/store" method="post">
