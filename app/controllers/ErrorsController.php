@@ -8,12 +8,14 @@ class ErrorsController extends Controller
 {
     public function error404()
     {
-        include dirname(__DIR__) . '/View/errors/404/index.html';
+        $this->view->setFileExtension('html');
+        echo $this->view->render('/errors/404/index');
     }
 
     public function error405()
     {
-        include dirname(__DIR__) . '/View/errors/405/index.html';
+        $this->view->setFileExtension('html');
+        echo $this->view->render('/errors/405/index');
     }
 
 }

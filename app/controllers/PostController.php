@@ -9,7 +9,7 @@ class PostController extends Controller
 
     public function add()
     {
-         include dirname(__DIR__) . '/View/add.php';
+         echo $this->view->render('add');
     }
 
     public function store()
@@ -23,13 +23,13 @@ class PostController extends Controller
     public function show($key)
     {
         $post =  $this->queryBuilder->show('comments',$key['id']);
-        include dirname(__DIR__) . '/View/show.php';
+        echo $this->view->render('show', ['post' => $post]);
     }
 
     public function edit($key)
     {
         $post =  $this->queryBuilder->show('comments',$key['id']);
-        include dirname(__DIR__) . '/View/edit.php';
+        echo $this->view->render('edit', ['post' => $post]);
     }
 
     public function update( $key)

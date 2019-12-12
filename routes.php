@@ -2,14 +2,13 @@
 
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     $r->addRoute('GET', '/', ['App\controllers\HomeController', 'index']);
-    // {id} must be a number (\d+)
+
     $r->addRoute('GET', '/post/add', ['App\controllers\PostController', 'add']);
     $r->addRoute('POST', '/post/store', ['App\controllers\PostController', 'store']);
     $r->addRoute('GET', '/post/show/{id:\d+}', ['App\controllers\PostController', 'show']);
     $r->addRoute('GET', '/post/edit/{id:\d+}', ['App\controllers\PostController', 'edit']);
     $r->addRoute('GET', '/post/delete/{id:\d+}', ['App\controllers\PostController', 'delete']);
     $r->addRoute('POST', '/post/update/{id:\d+}', ['App\controllers\PostController', 'update']);
-    $r->addRoute('POST', '/{id:\d+}', ['App\controllers\PostController', 'show']);
     // The /{title} suffix is optional
 });
 

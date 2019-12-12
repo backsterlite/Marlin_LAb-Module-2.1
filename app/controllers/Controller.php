@@ -5,12 +5,16 @@ namespace App\controllers;
 
 
 use App\models\QueryBuilder;
+use League\Plates\Engine;
 
-class Controller
+abstract class Controller
 {
+    protected $queryBuilder;
+    protected $view;
     public function __construct()
     {
         $this->queryBuilder = new QueryBuilder() ;
+        $this->view = new Engine('../app/View');
     }
 
 }

@@ -15,7 +15,7 @@ class HomeController extends Controller
     {
 
         $posts = $this->queryBuilder->all('comments');
-        include dirname(__DIR__) . '/View/home.php';
+        echo $this->view->render('home', ['posts' => $posts]);
 
     }
 
