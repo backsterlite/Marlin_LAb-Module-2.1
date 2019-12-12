@@ -1,6 +1,3 @@
-<?php
-$id = $_GET['id'];
-$post = $db->show('comments' , $id) ?>
 <!doctype html>
 <html lang="en">
 <head>

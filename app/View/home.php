@@ -19,7 +19,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item btn btn-success">
-                <a class="nav-link" href="/add">Add <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/post/add">Add <span class="sr-only">(current)</span></a>
             </li>
 
         </ul>
@@ -40,19 +40,18 @@
                 </thead>
                 <tbody>
                 <?php
-                $posts = $db->all('comments');
-                foreach ($posts as $post): ?>
+                foreach ($posts as $post):  ?>
                     <tr>
                         <th scope="row"><?php echo $post['id']; ?></th>
 
-                        <td width="700"><a href="/show?id=<?php echo $post['id']; ?>"><?php echo $post['title']; ?> </a></td>
+                        <td width="700"><a href="post/show/<?php echo $post['id']; ?>"><?php echo $post['title']; ?> </a></td>
 
                         <td>
-                            <a href="/edit?id=<?php echo $post['id']; ?>" class="btn btn-warning">EDIT</a>
-                            <a href="/delete?id=<?php echo $post['id']; ?>" onclick="return confirm('Are you sure?')" class="btn btn-danger">DELETE</a>
+                            <a href="/post/edit/<?php echo $post['id']; ?>" class="btn btn-warning">EDIT</a>
+                            <a href="/post/delete/<?php echo $post['id']; ?>" onclick="return confirm('Are you sure?')" class="btn btn-danger">DELETE</a>
                         </td>
                     </tr>
-                <?php endforeach; ?>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>

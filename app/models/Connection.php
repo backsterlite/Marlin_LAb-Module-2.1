@@ -1,6 +1,7 @@
 <?php
+namespace App\models;
 
-
+use PDO;
 class Connection
 {
     public static function make ($config)

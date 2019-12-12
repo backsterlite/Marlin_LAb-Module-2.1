@@ -1,16 +1,18 @@
 <?php
 
+namespace App\models;
 use Aura\SqlQuery\QueryFactory;
-
+use PDO;
 class QueryBuilder
 {
     
      private $pdo;
      private $queryFactory;
 
-    public function __construct($pdo)
+    public function __construct()
     {
-        $this->pdo = $pdo;
+        global $config;
+        $this->pdo = Connection::make( $config['database']);
         $this->queryFactory = new QueryFactory('mysql');
     }
     
@@ -52,9 +54,12 @@ class QueryBuilder
             ->from($table)
             ->where('id=:id')
             ->bindValue('id', $id);
+
         $sth = $this->pdo->prepare($select->getStatement());
-        $sth->execute($select->getBindValues());
-        return $sth->fetch(PDO::FETCH_ASSOC);
+
+             $sth->execute($select->getBindValues());
+             return $sth->fetch(2);
+
     }
 
     //update one note
@@ -73,11 +78,6 @@ class QueryBuilder
         $sth->execute($update->getBindValues());
     }
 
-    //output of one note for change
-    public function edit($table, $id)
-    {
-        $this->show($table, $id);
-    }
 
     //delete selected note
     public function delete($table, $id)
@@ -87,6 +87,6 @@ class QueryBuilder
                 ->where('id=:id')
                 ->bindValue('id', $id);
         $sth = $this->pdo->prepare($delete->getStatement());
-        $sth->execute($delete->getBindValues());
+        $res = $sth->execute($delete->getBindValues());
     }
 }
