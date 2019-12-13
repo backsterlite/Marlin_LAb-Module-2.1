@@ -5,15 +5,19 @@ namespace App\controllers;
 
 
 use App\models\Connection;
+use App\models\Notifications;
 use Delight\Auth\Auth;
 
 class UserController extends Controller
 {
     protected $auth;
+    private $mailer;
     public function __construct()
     {
         parent::__construct();
         $this->auth = new Auth(Connection::make(config('database')));
+        $this->mailer = new Notifications();
+
     }
 
     public function showRegisterForm()
@@ -25,9 +29,17 @@ class UserController extends Controller
     {
         try {
             $userId = $this->auth->register($_POST['email'], $_POST['password'], $_POST['username'], function ($selector, $token) {
-                d($selector,$token);
-                echo '<a href="/user/email_verification?selector='. \urlencode($selector) . '&token=' .\urlencode($token)
-                    . '">Перейдите по ссылке для верификации Email</a>';
+                $mail = $this->mailer->emailVerification($_POST['email'], $selector, $token);
+                $send = $mail->send();
+                if ($send) {
+                    flash()->success('На вашу почту ' . $_POST['email'] . ' отправлено письмо с подтверждением. Пожалуйста проверте
+                                    Вашу почту' );
+                } else {
+                   flash()->error( 'Could not send email please try again later');
+                }
+                redirect('/user/login');
+               /* echo '<a href="/user/email_verification?selector='. \urlencode($selector) . '&token=' .\urlencode($token)
+                    . '">Перейдите по ссылке для верификации Email</a>';*/
                /* d( '<a href="/user/email_verification?selector='. \urlencode($selector) . '&token=' .\urlencode($token)
                 . '">Перейдите по ссылке для верификации Email</a>');die;*/
             });
