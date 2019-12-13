@@ -3,6 +3,7 @@
 namespace App\models;
 use Aura\SqlQuery\QueryFactory;
 use PDO;
+use Faker\Factory;
 class QueryBuilder
 {
     
@@ -44,6 +45,26 @@ class QueryBuilder
         // execute with bound values
         $sth->execute($insert->getBindValues());
     }
+
+    public function insert_30($table)
+    {
+        $faker =  Factory::create();
+        $insert = $this->queryFactory->newInsert();
+        $insert->into($table);
+        for($i = 0; $i < 30; $i++)
+        {
+            $insert->cols([
+                'title' => $faker->words(3, true),
+                'content' => $faker->text
+            ]);
+            $insert->addRow();
+        }
+        $sth = $this->pdo->prepare($insert->getStatement());
+
+        // execute with bound values
+        return $sth->execute($insert->getBindValues());
+    }
+
 
     //show one note
     public function show($table, $id)

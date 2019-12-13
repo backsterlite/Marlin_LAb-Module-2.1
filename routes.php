@@ -4,6 +4,7 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     $r->addRoute('GET', '/', ['App\controllers\HomeController', 'index']);
 
     $r->addRoute('GET', '/post/add', ['App\controllers\PostController', 'add']);
+    $r->addRoute('GET', '/post/add/{id:\d+}', ['App\controllers\PostController', 'add_30']);
     $r->addRoute('POST', '/post/store', ['App\controllers\PostController', 'store']);
     $r->addRoute('GET', '/post/show/{id:\d+}', ['App\controllers\PostController', 'show']);
     $r->addRoute('GET', '/post/edit/{id:\d+}', ['App\controllers\PostController', 'edit']);

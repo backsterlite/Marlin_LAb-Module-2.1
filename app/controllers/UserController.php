@@ -71,8 +71,13 @@ class UserController extends Controller
 
     public function signIn()
     {
+        $rememberDuration = null;
+        if($_POST['remember'] == 1)
+        {
+             $rememberDuration = (int) (60 * 60 * 24 * 365.25);
+        }
         try {
-            $this->auth->login($_POST['email'], $_POST['password']);
+            $this->auth->login($_POST['email'], $_POST['password'],$rememberDuration);
             redirect('/');
             exit;
         }

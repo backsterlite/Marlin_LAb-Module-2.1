@@ -5,8 +5,6 @@
     <div class="row">
         <div class="col-md-8 offset-2">
             <?php echo flash();?>
-            <?php echo ltrim(strrchr($method, ':'), ':') ; ?>
-
             <table class="table">
                 <thead>
                 <tr>

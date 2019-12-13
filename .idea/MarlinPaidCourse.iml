@@ -12,8 +12,10 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/delight-im/http" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/inflector" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/eoghanobrien/php-simple-mail" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/fzaninotto/faker" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/illuminate/contracts" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/illuminate/support" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/jasongrimes/paginator" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/kint-php/kint" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/league/plates" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/nesbot/carbon" />

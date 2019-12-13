@@ -14,6 +14,10 @@
                     <label for="exampleFormControlInput1">Password</label>
                     <input type="password" name="password" class="form-control" id="exampleFormControlInput1" placeholder="Password">
                 </div>
+                <div class="form-group form-check">
+                    <input type="checkbox" name="remember" class="form-check-input" id="exampleCheck1">
+                    <label class="form-check-label" for="exampleCheck1">Remember me</label>
+                </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
 
             </form>

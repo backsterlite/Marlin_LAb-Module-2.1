@@ -12,6 +12,24 @@ class PostController extends Controller
          echo $this->view->render('posts/add');
     }
 
+    public function add_30()
+    {
+        if($this->queryBuilder->insert_30('comments'))
+        {
+            flash()->success('Post create');
+            header('Location:/');
+            exit;
+        }else
+        {
+
+            flash()->error('Post not create');
+            header('Location:/');
+            exit;
+        }
+
+
+    }
+
     public function store()
     {
         $this->queryBuilder->store('comments', $_POST);
