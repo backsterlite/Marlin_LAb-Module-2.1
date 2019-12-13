@@ -1,4 +1,7 @@
 <?php
+
+use Illuminate\Support\Arr;
+
 function dd ($item, $key = 1)
 {
     echo '<pre>';
@@ -13,7 +16,7 @@ function dd ($item, $key = 1)
 function config( $path)
 {
     global $config;
-    return $config[$path];
+    return Arr::get($config, $path);
 }
 
 function back()
@@ -30,3 +33,9 @@ function auth()
 {
     return (new Delight\Auth\Auth(App\models\Connection::make(config('database'))));
 }
+
+function paginator($paginator)
+{
+    include config('view_path') . 'patritions/paginate.php';
+}
+

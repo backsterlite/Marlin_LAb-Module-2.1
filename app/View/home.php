@@ -29,6 +29,10 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
+            <nav aria-label="Page navigation example" >
+                <?= paginator($paginator);?>
+            </nav>
+
         </div>
     </div>
 </div>

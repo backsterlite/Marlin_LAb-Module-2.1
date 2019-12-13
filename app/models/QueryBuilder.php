@@ -15,12 +15,25 @@ class QueryBuilder
         $this->pdo = Connection::make( config('database'));
         $this->queryFactory = new QueryFactory('mysql');
     }
-    
-    public function all($table)
+    public function allCount($table)
     {
         $select = $this->queryFactory->newSelect();
         $select->cols(['*'])
-                ->from($table);
+            ->from($table);
+        $sth = $this->pdo->prepare($select->getStatement());
+        $sth->execute($select->getBindValues());
+        return count($sth->fetchAll(PDO::FETCH_ASSOC));
+
+    }
+
+
+    public function allPaginate($table, $page, $perPage)
+    {
+        $select = $this->queryFactory->newSelect();
+        $select->cols(['*'])
+                ->from($table)
+                ->page($page)
+                ->setPaging($perPage);
         $sth = $this->pdo->prepare($select->getStatement());
         $sth->execute($select->getBindValues());
         return $sth->fetchAll(PDO::FETCH_ASSOC);

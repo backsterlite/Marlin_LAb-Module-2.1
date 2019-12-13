@@ -10,5 +10,8 @@ return [
     ],
     [
         'baseDir' => 'ROOT'
-    ]
+    ],
+
+    'view_path' => __DIR__ . '/app/View/'
+
 ];
