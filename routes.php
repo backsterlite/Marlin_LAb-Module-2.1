@@ -9,6 +9,14 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     $r->addRoute('GET', '/post/edit/{id:\d+}', ['App\controllers\PostController', 'edit']);
     $r->addRoute('GET', '/post/delete/{id:\d+}', ['App\controllers\PostController', 'delete']);
     $r->addRoute('POST', '/post/update/{id:\d+}', ['App\controllers\PostController', 'update']);
+
+    $r->addRoute('GET', '/user/register', ['App\controllers\UserController', 'showRegisterForm']);
+    $r->addRoute('POST', '/user/signup', ['App\controllers\UserController', 'signUp']);
+    $r->addRoute('GET', '/user/login', ['App\controllers\UserController', 'showLoginForm']);
+    $r->addRoute('POST', '/user/signin', ['App\controllers\UserController', 'signIn']);
+    $r->addRoute('GET', '/user/logout', ['App\controllers\UserController', 'logOut']);
+
+    $r->addRoute('GET', '/user/email_verification', ['App\controllers\VerificationController', 'emailVerification']);
     // The /{title} suffix is optional
 });
 

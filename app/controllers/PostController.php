@@ -9,7 +9,7 @@ class PostController extends Controller
 
     public function add()
     {
-         echo $this->view->render('add');
+         echo $this->view->render('posts/add');
     }
 
     public function store()
@@ -23,13 +23,13 @@ class PostController extends Controller
     public function show($key)
     {
         $post =  $this->queryBuilder->show('comments',$key['id']);
-        echo $this->view->render('show', ['post' => $post]);
+        echo $this->view->render('posts/show', ['post' => $post]);
     }
 
     public function edit($key)
     {
         $post =  $this->queryBuilder->show('comments',$key['id']);
-        echo $this->view->render('edit', ['post' => $post]);
+        echo $this->view->render('posts/edit', ['post' => $post]);
     }
 
     public function update( $key)

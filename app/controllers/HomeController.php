@@ -15,7 +15,8 @@ class HomeController extends Controller
     {
 
         $posts = $this->queryBuilder->all('comments');
-        echo $this->view->render('home', ['posts' => $posts]);
+        $method = __METHOD__;
+        echo $this->view->render('home', ['posts' => $posts, 'method' => $method]);
 
     }
 

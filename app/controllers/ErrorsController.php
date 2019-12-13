@@ -3,7 +3,6 @@
 
 namespace App\controllers;
 
-
 class ErrorsController extends Controller
 {
     public function error404()
@@ -16,6 +15,7 @@ class ErrorsController extends Controller
     {
         $this->view->setFileExtension('html');
         echo $this->view->render('/errors/405/index');
+
     }
 
 }

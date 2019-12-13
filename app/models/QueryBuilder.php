@@ -11,8 +11,7 @@ class QueryBuilder
 
     public function __construct()
     {
-        global $config;
-        $this->pdo = Connection::make( $config['database']);
+        $this->pdo = Connection::make( config('database'));
         $this->queryFactory = new QueryFactory('mysql');
     }
     
