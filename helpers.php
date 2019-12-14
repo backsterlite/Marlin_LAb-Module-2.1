@@ -31,7 +31,8 @@ function redirect(string $path)
 
 function auth()
 {
-    return (new Delight\Auth\Auth(App\models\Connection::make(config('database'))));
+    global  $container;
+    return (new Delight\Auth\Auth( $container->get('PDO')));
 }
 
 function paginator($paginator)

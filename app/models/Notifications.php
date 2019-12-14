@@ -12,9 +12,9 @@ class Notifications
             $token,
             $selector;
 
-    public function __construct()
+    public function __construct(SimpleMail $mailer)
     {
-        $this->mailer =  new SimpleMail();
+        $this->mailer =  $mailer;
     }
 
     public function emailVerification($mail, $selector, $token)

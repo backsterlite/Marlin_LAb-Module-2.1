@@ -12,10 +12,10 @@ abstract class Controller
 {
     protected $queryBuilder;
     protected $view;
-    public function __construct()
+    public function __construct(QueryBuilder $queryBuilder, Engine $view)
     {
-        $this->queryBuilder = new QueryBuilder() ;
-        $this->view = new Engine('../app/View');
+        $this->queryBuilder = $queryBuilder;
+        $this->view = $view;
     }
 
     protected function paginator($totalItems, $itemsPerPage, $currentPage, $urlPattern)

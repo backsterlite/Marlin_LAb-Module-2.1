@@ -10,10 +10,10 @@ class QueryBuilder
      private $pdo;
      private $queryFactory;
 
-    public function __construct()
+    public function __construct(PDO $pdo, QueryFactory $queryFactory)
     {
-        $this->pdo = Connection::make( config('database'));
-        $this->queryFactory = new QueryFactory('mysql');
+        $this->pdo = $pdo;
+        $this->queryFactory = $queryFactory;
     }
     public function allCount($table)
     {

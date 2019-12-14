@@ -18,7 +18,8 @@
     <title><?php echo $title; ?></title>
 </head>
 <body>
-<?php echo $this->insert('patritions/navigation') ?>
+
+<?php echo $this->insert('patritions/navigation', ['check' => $check]) ?>
 <?=$this->section('content')?>
 </body>
 </html>
