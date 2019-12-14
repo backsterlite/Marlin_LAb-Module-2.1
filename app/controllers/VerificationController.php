@@ -4,7 +4,7 @@
 namespace App\controllers;
 
 
-class VerificationController extends UserController
+class VerificationController extends Controller
 {
     public function emailVerification()
     {

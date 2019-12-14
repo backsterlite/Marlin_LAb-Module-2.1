@@ -40,3 +40,9 @@ function paginator($paginator)
     include config('view_path') . 'patritions/paginate.php';
 }
 
+function components($name)
+{
+    global $container;
+    return $container->get($name);
+}
+

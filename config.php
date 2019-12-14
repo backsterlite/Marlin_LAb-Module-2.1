@@ -36,6 +36,12 @@ return [
 
     ],
 
-    'view_path' => __DIR__ . '/app/View/'
+    'view_path' => __DIR__ . '/app/View/',
+
+    'Data for enter' =>
+    [
+        'email'=> 'test@gmail.com',
+        'password' => 'test'
+    ]
 
 ];

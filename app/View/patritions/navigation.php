@@ -14,6 +14,9 @@
                 <a class="nav-link" href="/post/add/30">Add 30  </a>
             </li>
         </ul>
+        <div class="col-md text-center">
+            <p>Добро пожаловать <strong><?php echo auth()->getUsername(); ?></strong></p>
+        </div>
         <ul class="navbar-nav ">
             <li class="nav-item ">
                 <a title="comingSoon" class="nav-link mr-sm-2 disabled" href="/user/profile" >Profile </a>

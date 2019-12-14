@@ -4,7 +4,10 @@
 namespace App\controllers;
 
 
+use App\models\Notifications;
 use App\models\QueryBuilder;
+
+use Delight\Auth\Auth;
 use League\Plates\Engine;
 use JasonGrimes\Paginator;
 
@@ -12,10 +15,14 @@ abstract class Controller
 {
     protected $queryBuilder;
     protected $view;
-    public function __construct(QueryBuilder $queryBuilder, Engine $view)
+    protected $auth;
+//    protected $mailer;
+    public function __construct()
     {
-        $this->queryBuilder = $queryBuilder;
-        $this->view = $view;
+        $this->queryBuilder = components( QueryBuilder::class);
+        $this->view =  components(Engine::class);
+        $this->auth = components( Auth::class);
+//        $this->mailer = $notifications;
     }
 
     protected function paginator($totalItems, $itemsPerPage, $currentPage, $urlPattern)

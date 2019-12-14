@@ -4,23 +4,21 @@
 namespace App\controllers;
 
 
-use App\models\Connection;
 use App\models\Notifications;
 use App\models\QueryBuilder;
 use Delight\Auth\Auth;
-use PDO;
+use League\Plates\Engine;
 
 class UserController extends Controller
 {
-    protected $auth;
     private $mailer;
 
 
-    public function __construct( Auth $auth)
+    public function __construct( Notifications $notifications)
     {
-        parent::__construct($this->queryBuilder);
-        $this->auth = $auth;
-        $this->mailer = new Notifications();
+        parent::__construct();
+
+        $this->mailer = $notifications;
 
     }
 

@@ -25,7 +25,6 @@ class HomeController extends Controller
 
         $paginator = $this->paginator($totalItems, $itemsPerPage, $currentPage, $urlPattern);
         $paginator->setMaxPagesToShow(5);
-
         $posts = $this->queryBuilder->allPaginate('comments',  $currentPage, $itemsPerPage);
 
         echo $this->view->render('home', ['posts' => $posts, 'paginator' => $paginator, 'check' => $check]);
