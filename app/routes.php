@@ -10,8 +10,17 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
 
     $r->get( '/user/login', ['App\controllers\UserController', 'login']);
     $r->post( '/user/signin', ['App\controllers\UserController', 'signIn']);
+    $r->get( '/user/logout', ['App\controllers\UserController', 'logout']);
     $r->get( '/user/register', ['App\controllers\UserController', 'register']);
     $r->post( '/user/signup', ['App\controllers\UserController', 'signUp']);
+
+    $r->get( '/user/email_verification', ['App\controllers\UserController', 'emailVerification']);
+    $r->get( '/user/forgot_password', ['App\controllers\UserController', 'showForgotPasswordForm']);
+    $r->post(  '/user/forgot_password', ['App\controllers\UserController', 'forgotPasswordInitiatingRequest']);
+    $r->get(  '/user/reset_password', ['App\controllers\UserController', 'canResetPassword']);
+    $r->post(  '/user/change_password', ['App\controllers\UserController', 'changePassword']);
+
+    $r->get(  '/user/resend_email', ['App\controllers\UserController', 'resendEmailMessage']);
     // {id} must be a number (\d+)
     $r->addRoute('GET', '/user/{id:\d+}', 'get_user_handler');
     // The /{title} suffix is optional

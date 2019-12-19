@@ -30,7 +30,7 @@
 
                     <button type="submit" class="btn btn-primary mt-2">Submit</button>
                     <p>Not a member? <a href="/user/register" class="blue-text">Sign Up</a></p>
-                    <p>Forgot <a href="#" class="blue-text">Password?</a></p>
+                    <p>Forgot <a href="/user/forgot_password" class="blue-text">Password?</a></p>
 
                 </div>
             </form>

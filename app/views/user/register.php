@@ -25,7 +25,7 @@
                 </div>
                 <div class="form-group">
                     <div class="form-check">
-                        <input class="form-check-input" name="remember" type="checkbox" id="disabledFieldsetCheck" >
+                        <input class="form-check-input" name="terms" type="checkbox" id="disabledFieldsetCheck" >
                         <label class="form-check-label" for="disabledFieldsetCheck">
                             Agree to the <a href="/terms" class="blue-text">rules</a>
                         </label>
@@ -36,6 +36,7 @@
 
                     <button type="submit" class="btn btn-primary mt-2">Submit</button>
                     <p>Already have an account? <a href="/user/login" class="blue-text">Sign In</a></p>
+                    <p>Did not get the email? <a href="/user/resend_email" class="blue-text">Resend request</a></p>
                 </div>
             </form>
         </div>

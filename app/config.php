@@ -32,5 +32,13 @@ return[
         'userName' => 'root',
         'password' => ''
     ],
-    'view_path' => __DIR__ .'/views'
+    'view_path' => __DIR__ .'/views',
+
+    'Mail' =>[
+        'Admin' =>[
+            'name' => 'Admin',
+            'email' => 'Admin@backsterSite.com'
+        ]
+
+    ]
 ];

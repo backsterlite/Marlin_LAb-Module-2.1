@@ -7,15 +7,17 @@ namespace App\controllers;
 use Delight\Auth\Auth;
 use Respect\Validation\Exceptions\ValidationException;
 use Respect\Validation\Validator as v;
-use Valitron\Validator;
+use App\models\Notifications;
 
 class UserController extends Controller
 {
     private $auth;
-    public function __construct(Auth $auth)
+    private $notifications;
+    public function __construct(Auth $auth, Notifications $notifications)
     {
         parent::__construct();
         $this->auth = $auth;
+        $this->notifications = $notifications;
     }
 
     public function login()
@@ -26,7 +28,7 @@ class UserController extends Controller
 
     public function signIn()
     {
-        if($this->validateLogin($_POST))
+        if($this->validateLogin())
         {
             $request = $_POST['request'];
             $rememberDuration = null;
@@ -77,10 +79,20 @@ class UserController extends Controller
         {
             try {
                 $userId = $this->auth->register($_POST['email'], $_POST['password'], $_POST['username'], function ($selector, $token) {
-                    echo 'Send ' . $selector . ' and ' . $token . ' to the user (e.g. via email)';
+                    $success = $this->notifications->emailVerifications($_POST['email'], $_POST['username'], $selector, $token);
+                    $_SESSION['request_email'] = $_POST['email'];
+                    if(!$success)
+                    {
+                        flash()->error('В связи с проблемами на сервере не удалось отправить сообщение. Перейдите по ссылке
+                                        "Resend request"');
+                        back();
+                        exit;
+                    }
                 });
-
-                echo 'We have signed up a new user with the ID ' . $userId;
+                flash()->success('На вашу почту "' .$_POST['email']. '" отправлено письмо с подтверждением регистрации.
+                                    Зайдите на вашу почту для завершения регистрации');
+                back();
+                exit;
             }
             catch (\Delight\Auth\InvalidEmailException $e) {
                 flash()->error('Invalid email address');
@@ -114,7 +126,7 @@ class UserController extends Controller
             ->keyValue('password_confirmation', 'equals', 'password');
 
         try {
-            $validator->assert($_POST);
+            return $validator->assert($_POST);
 
         } catch (ValidationException $exception) {
             $exception->findMessages($this->getMessages());
@@ -142,9 +154,6 @@ class UserController extends Controller
         }
     }
 
-
-
-
     private function getMessages()
     {
         return [
@@ -154,6 +163,193 @@ class UserController extends Controller
             'password'  =>  'Введите пароль',
             'password_confirmation' =>  'Пароли не сопадают'
         ];
+    }
+
+    public function emailVerification()
+    {
+        try {
+            $this->auth->confirmEmail($_GET['selector'], $_GET['token']);
+
+           flash()->success('Email address has been verified');
+           redirect('/user/login');
+           exit;
+        }
+        catch (\Delight\Auth\InvalidSelectorTokenPairException $e) {
+            flash()->error('Invalid token');
+            redirect('/user/register');
+            exit;
+        }
+        catch (\Delight\Auth\TokenExpiredException $e) {
+            flash()->error('Token expired');
+            redirect('/user/register');
+            exit;
+        }
+        catch (\Delight\Auth\UserAlreadyExistsException $e) {
+            flash()->error('Email address already exists');
+            redirect('/user/register');
+            exit;
+        }
+        catch (\Delight\Auth\TooManyRequestsException $e) {
+            flash()->error('Too many requests');
+            redirect('/user/register');
+            exit;
+        }
+    }
+    public function showForgotPasswordForm()
+    {
+        echo $this->view->render('user/forgotPassword');
+    }
+
+    public function forgotPasswordInitiatingRequest()
+    {
+        try {
+            $this->auth->forgotPassword($_POST['email'], function ($selector, $token) {
+                $_SESSION['request_email'] = $_POST['email'];
+                $success = $this->notifications->forgotPassword($_POST['email'], $selector, $token);
+                if(!$success)
+                {
+                    flash()->error('В связи с проблемами на сервере не удалось отправить сообщение. Перейдите по ссылке
+                                        "Resend request"');
+                    back();
+                    exit;
+                }
+            });
+            flash()->success('На вашу почту "' .$_POST['email']. '" отправлено письмо с подтверждением .
+                                    Зайдите на вашу почту для завершения смены пароля');
+            back();
+            exit;
+        }
+        catch (\Delight\Auth\InvalidEmailException $e) {
+            flash()->error('Invalid email address');
+            back();
+            exit;
+        }
+        catch (\Delight\Auth\EmailNotVerifiedException $e) {
+            flash()->error('Email not verified');
+            back();
+            exit;
+        }
+        catch (\Delight\Auth\ResetDisabledException $e) {
+            flash()->error('Password reset is disabled');
+            back();
+            exit;
+        }
+        catch (\Delight\Auth\TooManyRequestsException $e) {
+            flash()->error('Too many requests');
+            back();
+            exit;
+        }
+    }
+
+    public function canResetPassword()
+    {
+        try {
+            $this->auth->canResetPasswordOrThrow($_GET['selector'], $_GET['token']);
+
+            echo $this->view->render('user/changePassword', ['selector' => $_GET['selector'], 'token' => $_GET['token']]);
+        }
+        catch (\Delight\Auth\InvalidSelectorTokenPairException $e) {
+            flash()->error('Invalid token');
+            redirect('/user/forgot_password');
+            exit;
+        }
+        catch (\Delight\Auth\TokenExpiredException $e) {
+            flash()->error('Token expired');
+            redirect('/user/forgot_password');
+            exit;
+        }
+        catch (\Delight\Auth\ResetDisabledException $e) {
+            flash()->error('Password reset is disabled');
+            redirect('/user/forgot_password');
+            exit;
+        }
+        catch (\Delight\Auth\TooManyRequestsException $e) {
+            flash()->error('Too many requests');
+            redirect('/user/forgot_password');
+            exit;
+        }
+    }
+
+    public function changePassword()
+    {
+        try {
+            $this->auth->resetPassword($_POST['selector'], $_POST['token'], $_POST['password']);
+
+            flash()->success('Пароль успешно изменен');
+            redirect('/user/login');
+            exit;
+        }
+        catch (\Delight\Auth\InvalidSelectorTokenPairException $e) {
+            flash()->error('Invalid token');
+            back();
+            exit;
+        }
+        catch (\Delight\Auth\TokenExpiredException $e) {
+            flash()->error('Token expired');
+            back();
+            exit;
+        }
+        catch (\Delight\Auth\ResetDisabledException $e) {
+            flash()->error('Password reset is disabled');
+            back();
+            exit;
+        }
+        catch (\Delight\Auth\InvalidPasswordException $e) {
+            flash()->error('Invalid password');
+            back();
+            exit;
+        }
+        catch (\Delight\Auth\TooManyRequestsException $e) {
+            flash()->error('Too many requests');
+            back();
+            exit;
+        }
+    }
+
+    public function logout()
+    {
+        $this->auth->logOut();
+        redirect('/');
+        exit;
+    }
+    public function resendEmailMessage()
+    {
+        try {
+            $this->auth->resendConfirmationForEmail($_SESSION['request_email'], function ($selector, $token) {
+                if($_SERVER['HTTP_REFERER'] == '/user/register')
+                {
+                    $this->notifications->emailVerifications($_POST['email'], $_POST['username'], $selector, $token);
+                }elseif ($_SERVER['HTTP_REFERER'] == '/user/forgot_password')
+                {
+                    $this->notifications->forgotPassword($_POST['email'], $selector, $token);
+                }
+            });
+            if($_SERVER['HTTP_REFERER'] == '/user/register')
+            {
+                flash()->success('На вашу почту "' .$_POST['email']. '" отправлено письмо с подтверждением регистрации.
+                                    Зайдите на вашу почту для завершения регистрации');
+                back();
+                exit;
+            }elseif ($_SERVER['HTTP_REFERER'] == '/user/forgot_password')
+            {
+                flash()->success('На вашу почту "' .$_POST['email']. '" отправлено письмо с подтверждением .
+                                    Зайдите на вашу почту для завершения смены пароля');
+                back();
+                exit;
+            }
+
+
+        }
+        catch (\Delight\Auth\ConfirmationRequestNotFound $e) {
+            flash()->error('No earlier request found that could be re-sent');
+            back();
+            exit;
+        }
+        catch (\Delight\Auth\TooManyRequestsException $e) {
+            flash()->error('There have been too many requests -- try again later');
+            back();
+            exit;
+        }
     }
 
 }
