@@ -75,7 +75,7 @@ function back()
 {
     header('Location:' . $_SERVER['HTTP_REFERER']);
 }
-function backLogin($request)
+function redirect($path)
 {
-    header('Location:' .$request);
+    header('Location:' .$path);
 }
