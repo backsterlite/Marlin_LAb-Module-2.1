@@ -13,7 +13,9 @@
         "eoghanobrien/php-simple-mail": "^1.7",
         "fzaninotto/faker": "^1.9",
         "jasongrimes/paginator": "^1.0",
-        "php-di/php-di": "^6.0"
+        "php-di/php-di": "^6.0",
+        "cocur/slugify": "^4.0",
+        "nesbot/carbon": "^2.27"
     },
     "autoload": {
         "psr-4": {

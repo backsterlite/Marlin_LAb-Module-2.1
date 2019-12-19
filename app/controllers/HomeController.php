@@ -7,28 +7,32 @@ namespace App\controllers;
 
 
 
+use Carbon\Carbon;
+use JasonGrimes\Paginator;
+
 class HomeController extends Controller
 {
 
 
     public function index()
     {
-        if(auth()->isLoggedIn() || auth()->isRemembered())
-        {
-            $check = true;
-        }
-
-        $totalItems = $this->queryBuilder->allCount('comments');
-        $itemsPerPage = 8;
-        $currentPage = $_GET['page'] ?? 1;
+        $posts = $this->database->allDESC('posts');
+        $totalItems = count($posts);
+        $itemsPerPage = 1;
+        $currentPage = ($_GET['page'])?? 1;
         $urlPattern = '/?page=(:num)';
 
-        $paginator = $this->paginator($totalItems, $itemsPerPage, $currentPage, $urlPattern);
-        $paginator->setMaxPagesToShow(5);
-        $posts = $this->queryBuilder->allPaginate('comments',  $currentPage, $itemsPerPage);
+        $paginator = new Paginator($totalItems, $itemsPerPage, $currentPage, $urlPattern);
 
-        echo $this->view->render('home', ['posts' => $posts, 'paginator' => $paginator, 'check' => $check]);
-
+        $posts = $this->database->getPaginated('posts', $currentPage, $itemsPerPage);
+        $featuredPosts = $this->database->getFields('posts', 'is_featured', 8);
+        $popularPosts = $this->database->allDESC('posts', 'views', 8);
+        $tags = $this->database->allDESC('tags', 'post_counter', 15);
+        $categories = $this->database->allASC('category');
+        $comments = $this->database->allASC('comments');
+        $now = Carbon::now('Europe/Kiev');
+        echo $this->view->render('home', compact('posts', 'featuredPosts', 'tags',
+                                                'comments', 'now','categories', 'popularPosts','paginator'));
     }
 
 }
