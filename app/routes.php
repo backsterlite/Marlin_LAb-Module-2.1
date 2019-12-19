@@ -6,10 +6,12 @@ $container = $builder->build();
 
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     $r->get( '/', ['App\controllers\HomeController', 'index']);
+    $r->get( '/terms', ['App\controllers\HomeController', 'rules']);
 
     $r->get( '/user/login', ['App\controllers\UserController', 'login']);
     $r->post( '/user/signin', ['App\controllers\UserController', 'signIn']);
     $r->get( '/user/register', ['App\controllers\UserController', 'register']);
+    $r->post( '/user/signup', ['App\controllers\UserController', 'signUp']);
     // {id} must be a number (\d+)
     $r->addRoute('GET', '/user/{id:\d+}', 'get_user_handler');
     // The /{title} suffix is optional

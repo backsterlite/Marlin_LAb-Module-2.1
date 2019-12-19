@@ -35,4 +35,9 @@ class HomeController extends Controller
                                                 'comments', 'now','categories', 'popularPosts','paginator'));
     }
 
+    public function rules()
+    {
+        echo 'rules';
+    }
+
 }

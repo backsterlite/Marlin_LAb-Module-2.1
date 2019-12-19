@@ -2,7 +2,9 @@
 
 <div class="container">
     <div class="row">
+
         <div class="col-md-8 offset-2 my-5">
+            <?=  flash(); ?>
             <form action="/user/signin" method="post" >
                 <div class="form-group  ">
                     <input type="hidden" name="request" class="form-control " value="<?= $_SERVER['HTTP_REFERER']?>" id="exampleInputEmail1" >
