@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
 
-        <div class="col-md-8 offset-2 my-5">
+        <div class="col-md-4 offset-4 my-5">
             <?=  flash(); ?>
             <form action="/user/signin" method="post" >
                 <div class="form-group  ">

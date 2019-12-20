@@ -3,11 +3,7 @@
 
 namespace App\controllers;
 
-
-
-use League\Plates\Engine;
-
-abstract class Controller
+ class Controller
 {
     protected $database;
     protected $view;

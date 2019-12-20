@@ -43,17 +43,17 @@
                     <div class="thumb">
                         <img class="img-fluid" src="<?php echo __DIR__ .'/'. $post['image'] ?>" alt="">
                         <ul class="thumb-info">
-                            <li><a href="#"><i class="ti-user"></i><?php echo getUser($post['user_id'])['username']; ?></a></li>
+                            <li><a href="#"><i class="ti-user"></i><?php echo acert(getUser($post['user_id'])['username']); ?></a></li>
                             <li><a href="#"><i class="ti-notepad"></i><?= date('F d,Y', strtotime($post['date']))?></a></li>
-                            <li><a href="#"><i class="ti-themify-favicon"></i><?php echo ($comments['post_id'] == $post['id'])? count($comments['post_id']): '0'; ?> Comment(s)</a></li>
+                            <li><a href="/post/comments/<?= $post['id'];?>"><i class="ti-themify-favicon"></i><?php echo commentsCount($post['id']);?> Comment(s)</a></li>
                             <li><a href="#"><i class="ti-eye"></i><?= $post['views'];?> View(s)</a></li>
                         </ul>
                     </div>
                     <div class="details mt-20">
-                        <a href="blog-single.html">
+                        <a href="/post/<?= $post['id'];?>">
                             <h3><?= $post['description']?></h3>
                         </a>
-                        <p class="tag-list-inline">Tag: <?php foreach ($tags as $tag): ?> <?php echo (end($tags)['id'] != $tag['id'])?
+                        <p class="tag-list-inline">Tag: <?php foreach (getTags() as $tag): ?> <?php echo (end(getTags())['id'] != $tag['id'])?
                                 '<a href=" /tag/' . $tag['id'] . '">' .  $tag['title'] . '</a>,': '<a href=" /tag/' . $tag['id'] . '">' .
                                                                                     $tag['title'] . '</a>'?> <?php endforeach; ?></p>
                         <p><?= $post['content']?></p>

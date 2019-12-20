@@ -19,7 +19,7 @@
             <div class="single-sidebar-widget post-category-widget">
                 <h4 class="single-sidebar-widget__title">Category</h4>
                 <ul class="cat-list mt-20">
-                    <?php foreach($categories as $category): ?>
+                    <?php foreach(getAllCategories() as $category): ?>
                     <li>
                         <a href="/category/<?= $category['id']?>" class="d-flex justify-content-between">
                             <p><?= $category['title']?></p>
@@ -34,7 +34,7 @@
             <div class="single-sidebar-widget popular-post-widget">
                 <h4 class="single-sidebar-widget__title">Popular Post</h4>
                 <div class="popular-post-list">
-                    <?php foreach($popularPosts as$popularPost): ?>
+                    <?php foreach(getPopularPosts() as$popularPost): ?>
                     <div class="single-post-list">
                         <div class="thumb">
                             <img class="card-img rounded-0" src="/public/assets/img/blog/thumb/thumb1.png" alt="">
@@ -57,7 +57,7 @@
             <div class="single-sidebar-widget tag_cloud_widget">
                 <h4 class="single-sidebar-widget__title">Popular Tags</h4>
                 <ul class="list">
-                    <?php foreach($tags as $tag): ?>
+                    <?php foreach(getTags() as $tag): ?>
                     <li>
                         <a href="/tag/<?= $tag['id']?>"><?= $tag['title']?></a>
                     </li>

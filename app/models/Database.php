@@ -100,8 +100,8 @@ class Database
         $select = $this->factory->newSelect();
         $select->cols(['*'])
             ->from($table)
-            ->where("$row = :row")
-            ->bindValue(':row', $id)
+            ->where("$row = :$row")
+            ->bindValue(":$row", (int)$id)
             ->page($page)
             ->setPaging($rows);
         $sth = $this->pdo->prepare($select->getStatement());
@@ -131,11 +131,24 @@ class Database
         $select->cols(['*'])
             ->from($table)
             ->where("$row = :$row")
+            ->bindValue(":$row", $value);
+
+        $sth = $this->pdo->prepare($select->getStatement());
+        $sth->execute($select->getBindValues());
+         $res = count($sth->fetchAll(PDO::FETCH_ASSOC));
+        return $res;
+    }
+    public function whereAll($table, $row, $value)
+    {
+        $select = $this->factory->newSelect();
+        $select->cols(['*'])
+            ->from($table)
+            ->where("$row = :$row")
             ->bindValue($row, $value);
 
         $sth = $this->pdo->prepare($select->getStatement());
 
-        return count($sth->fetchAll(PDO::FETCH_ASSOC));
+        return $sth->fetchAll(PDO::FETCH_ASSOC);
     }
 
 }

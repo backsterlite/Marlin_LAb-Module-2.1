@@ -7,6 +7,7 @@ $container = $builder->build();
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     $r->get( '/', ['App\controllers\HomeController', 'index']);
     $r->get( '/terms', ['App\controllers\HomeController', 'rules']);
+    $r->get( '/category', ['App\controllers\HomeController', 'showAllCategories']);
 
     $r->get( '/user/login', ['App\controllers\UserController', 'login']);
     $r->post( '/user/signin', ['App\controllers\UserController', 'signIn']);
@@ -21,6 +22,9 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     $r->post(  '/user/change_password', ['App\controllers\UserController', 'changePassword']);
 
     $r->get(  '/user/resend_email', ['App\controllers\UserController', 'resendEmailMessage']);
+
+    $r->get( '/category/{id:\d+}', ['App\controllers\PostController', 'showCategory']);
+
     // {id} must be a number (\d+)
     $r->addRoute('GET', '/user/{id:\d+}', 'get_user_handler');
     // The /{title} suffix is optional

@@ -17,11 +17,30 @@ function getAllCategories()
     $factory = $container->get(\App\models\Database::class);
     return $factory->allASC('category');
 }
+function getPopularPosts()
+{
+    global $container;
+    $factory = $container->get(\App\models\Database::class);
+    return $factory->allDESC('posts', 'views', 8);
+}
+
+function getTags()
+{
+    global $container;
+    $factory = $container->get(\App\models\Database::class);
+    return $factory->allDESC('tags', 'post_counter', 15);
+}
+function getCategory($id)
+{
+    global $container;
+    $factory = $container->get(\App\models\Database::class);
+    return $factory->find('category', 'id', $id);
+}
 function getUser($id)
 {
     global $container;
     $factory = $container->get(\App\models\Database::class);
-    return $factory->find('users', 'id', $id);
+    return $res = $factory->find('users', 'id', $id);
 }
 function diffDates($base, $now)
 {
@@ -79,3 +98,22 @@ function redirect($path)
 {
     header('Location:' .$path);
 }
+
+function commentsCount(  $post_id)
+{
+    global $container;
+     $db = $container->get(\App\models\Database::class);
+     $res  = $db->getCount('comments','post_id',  $post_id);
+    return $res;
+
+}
+
+function acert($name)
+{
+    if(strlen($name) > 9)
+    {
+       return mb_strimwidth($name, 0, 10, '...');
+    }
+    return $name;
+}
+

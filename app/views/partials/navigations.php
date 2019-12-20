@@ -15,7 +15,7 @@
                     <ul class="nav navbar-nav menu_nav justify-content-center">
                         <li class="nav-item active"><a class="nav-link" href="/">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="archive.html">Archive</a></li>
-                        <li class="nav-item"><a class="nav-link" href="category.html">Category</a>
+                        <li class="nav-item"><a class="nav-link" href="/category">Category</a>
                         <li class="nav-item submenu dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                aria-expanded="false">Pages</a>
@@ -54,7 +54,7 @@
                     <ul class="nav navbar-nav menu_nav justify-content-center">
                         <li class="nav-item active"><a class="nav-link" href="/">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="archive.html">Archive</a></li>
-                        <li class="nav-item"><a class="nav-link" href="category.html">Category</a>
+                        <li class="nav-item"><a class="nav-link" href="/category">Category</a>
                         <li class="nav-item submenu dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                aria-expanded="false">Pages</a>
