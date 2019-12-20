@@ -27,10 +27,16 @@ class PostController extends Controller
 
     public function showOne($id)
     {
+        $totalItems = $this->database->getCount('comments', 'post_id', $id);
+        $itemsPerPage = 2;
+        $currentPage = ($_GET['page'])?? 1;
+        $urlPattern ='?page=(:num)';
 
+        $paginator = new Paginator($totalItems, $itemsPerPage, $currentPage, $urlPattern);
         $post = $this->database->find('posts', 'id', $id);
+        $comments = $this->database->getPaginatedFrom('comments', $post['id'], $id,  $currentPage, $itemsPerPage);
 
-        echo $this->view->render('post/showOne', compact('post'));
+        echo $this->view->render('post/showOne', compact('post', 'comments', 'paginator'));
 
     }
 }

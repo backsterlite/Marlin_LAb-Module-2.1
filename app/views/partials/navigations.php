@@ -14,16 +14,16 @@
                 <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                     <ul class="nav navbar-nav menu_nav justify-content-center">
                         <li class="nav-item active"><a class="nav-link" href="/">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="archive.html">Archive</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/user/profile">Profile</a></li>
                         <li class="nav-item"><a class="nav-link" href="/category">Category</a>
                         <li class="nav-item submenu dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                               aria-expanded="false">Pages</a>
+                               aria-expanded="false">Add</a>
                             <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href="blog-details.html">Blog Details</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/post/new">Blog Details</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/post/my-post">Contact</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right navbar-social">
                         <li><a href="/user/logout" ><i class="ti-unlock mr-2"></i></a>|</li>

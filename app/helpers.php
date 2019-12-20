@@ -108,11 +108,11 @@ function commentsCount(  $post_id)
 
 }
 
-function acert($name)
+function acert($name, $width)
 {
-    if(strlen($name) > 9)
+    if(strlen($name) >= $width)
     {
-       return mb_strimwidth($name, 0, 10, '...');
+       return mb_strimwidth($name, 0, $width, '...');
     }
     return $name;
 }

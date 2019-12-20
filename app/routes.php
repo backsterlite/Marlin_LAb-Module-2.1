@@ -25,6 +25,9 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
 
     $r->get( '/category/{id:\d+}', ['App\controllers\PostController', 'showCategory']);
 
+
+    $r->get( '/post/{id:\d+}', ['App\controllers\PostController', 'showOne']);
+
     // {id} must be a number (\d+)
     $r->addRoute('GET', '/user/{id:\d+}', 'get_user_handler');
     // The /{title} suffix is optional

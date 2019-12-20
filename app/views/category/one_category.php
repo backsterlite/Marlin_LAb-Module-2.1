@@ -30,7 +30,7 @@
                             <div class="thumb">
                                 <img class="card-img rounded-0" src="img/blog/thumb/thumb-card1.png" alt="">
                                 <ul class="thumb-info">
-                                    <li><a href="#"><i class="ti-user"></i><?= acert(getUser($post['user_id'])['username'])?></a></li>
+                                    <li><a href="#"><i class="ti-user"></i><?= acert(getUser($post['user_id'])['username'], 10)?></a></li>
                                     <li><a href="#"><i class="ti-themify-favicon"></i><?= commentsCount($post['id'])?> Comments</a></li>
                                 </ul>
                             </div>

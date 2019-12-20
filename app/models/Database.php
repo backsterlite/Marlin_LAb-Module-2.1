@@ -59,14 +59,14 @@ class Database
 
     }
 
-    public function getFields($table, $field = 'id' , $limit = null)
+    public function getFields($table, $value, $field = 'id', $limit = null)
     {
         $select = $this->factory->newSelect();
 
         $select->cols(['*'])
             ->from($table)
-            ->where($field . ' = :num')
-            ->bindValue(':num', 1)
+            ->where("$field = :$field")
+            ->bindValue(":$field", $value)
             ->orderBy(['id DESC'])//
             ->limit($limit);
         $sth = $this->pdo->prepare($select->getStatement());
@@ -103,7 +103,8 @@ class Database
             ->where("$row = :$row")
             ->bindValue(":$row", (int)$id)
             ->page($page)
-            ->setPaging($rows);
+            ->setPaging($rows)
+            ->orderBy(['id DESC']);
         $sth = $this->pdo->prepare($select->getStatement());
 
         $sth->execute($select->getBindValues());
