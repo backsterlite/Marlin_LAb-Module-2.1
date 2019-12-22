@@ -37,6 +37,21 @@ class PostController extends Controller
         $comments = $this->database->getPaginatedFrom('comments', $post['id'], $id,  $currentPage, $itemsPerPage);
 
         echo $this->view->render('post/showOne', compact('post', 'comments', 'paginator'));
+    }
+    public function showTag($id)
+    {
+        $totalItems = $this->database->getCount('post_tags', 'tag_id', $id);
+        $itemsPerPage = 2;
+        $currentPage = ($_GET['page'])?? 1;
+        $urlPattern ='?page=(:num)';
 
+        $paginator = new Paginator($totalItems, $itemsPerPage, $currentPage, $urlPattern);
+        $postValues = $this->database->whereAll('post_tags', 'post_id', $id);
+        $this->database->getAllPostsWithTags('posts', 'id', $postValues);
+        $tag = $this->database->find('tags', 'id', $id);
+        $posts = $this->database->getPaginated('postsT',  $currentPage, $itemsPerPage);
+        $now = Carbon::now('Europe/Kiev');
+        echo $this->view->render('one_tag', compact('posts',
+            'comments', 'now','paginator', 'tag'));
     }
 }

@@ -4,6 +4,7 @@
 namespace App\controllers;
 
 
+use App\models\ImageManager;
 use Delight\Auth\Auth;
 use Respect\Validation\Exceptions\ValidationException;
 use Respect\Validation\Validator as v;
@@ -13,11 +14,15 @@ class UserController extends Controller
 {
     private $auth;
     private $notifications;
-    public function __construct(Auth $auth, Notifications $notifications)
+
+    private $manager;
+
+    public function __construct(Auth $auth, Notifications $notifications, ImageManager $manager)
     {
         parent::__construct();
         $this->auth = $auth;
         $this->notifications = $notifications;
+        $this->manager = $manager;
     }
 
     public function login()
@@ -131,7 +136,6 @@ class UserController extends Controller
         } catch (ValidationException $exception) {
             $exception->findMessages($this->getMessages());
             flash()->error($exception->getMessages());
-
             back();
             exit;
         }
@@ -149,6 +153,37 @@ class UserController extends Controller
             $exception->findMessages($this->getMessages());
             flash()->error($exception->getMessages());
 
+            back();
+            exit;
+        }
+    }
+    private function validateProfileChangeInfo()
+    {
+        $validator = v::key('email', v::email())
+            ->key('username', v::stringType()->notEmpty());
+
+        try {
+            return  $validator->assert($_POST);
+
+
+        } catch (ValidationException $exception) {
+            $exception->findMessages($this->getMessages());
+            flash()->error($exception->getMessages());
+            back();
+            exit;
+        }
+    }
+    private function validateProfileChangeSecurity()
+    {
+        $validator = v::key('password', v::stringType()->notEmpty())
+                    ->keyValue('password_confirmation', 'equals', 'password');;
+        try {
+            return  $validator->assert($_POST);
+
+
+        } catch (ValidationException $exception) {
+            $exception->findMessages($this->getMessages());
+            flash()->error($exception->getMessages());
             back();
             exit;
         }
@@ -195,7 +230,7 @@ class UserController extends Controller
             exit;
         }
     }
-    public function showForgotPasswordForm()
+     public function showForgotPasswordForm()
     {
         echo $this->view->render('user/forgotPassword');
     }
@@ -350,6 +385,87 @@ class UserController extends Controller
             back();
             exit;
         }
+    }
+
+    public function showProfile($id)
+    {
+        if($this->auth->getUserId() == $id)
+        {
+            $user = $this->database->find('users', 'id', $id);
+            echo $this->view->render('user/profile', compact('user'));
+        }else{
+            redirect('/');
+            exit;
+        }
+
+
+    }
+
+    public function editProfileInfo($id)
+    {
+        try{
+             $file = $this->manager->verificationImage($_FILES['image']);
+        }catch (\Exception $e)
+        {
+            flash()->error($e->getMessage());
+            back();
+            exit;
+        }
+        if($file)
+        {
+            $image = $this->database->find('users', 'id', $id);
+            $data = [
+                'username' => $_POST['username'],
+                'email'    => $_POST['emai'],
+                'image'    => '$file'
+            ];
+            if($this->validateProfileChangeInfo())
+            {
+                try{
+                    $this->database->update('users', $data, 'id', $id);
+                }catch (\Exception $e)
+                {
+                    flash()->error('Операция не удалась. Пожалуйста попробуйте позже');
+                    back();
+                    exit;
+                }
+                $this->manager->add($_FILES['image'], 'user', $file, $image['image']);
+                flash()->success('Данные успешно обновлены');
+                back();
+                exit;
+            }
+        }
+
+    }
+
+    public function editProfileSecurity($id)
+    {
+        if($this->validateProfileChangeSecurity())
+        {
+            try {
+                $this->auth->changePassword($_POST['oldPassword'], $_POST['newPassword']);
+
+                flash()->success('Password has been changed');
+                back();
+                exit;
+            }
+            catch (\Delight\Auth\NotLoggedInException $e) {
+                flash()->error('Not logged in');
+                back();
+                exit;
+            }
+            catch (\Delight\Auth\InvalidPasswordException $e) {
+                flash()->error('Invalid password(s)');
+                back();
+                exit;
+            }
+            catch (\Delight\Auth\TooManyRequestsException $e) {
+                flash()->error('Too many requests');
+                back();
+                exit;
+            }
+        }
+
     }
 
 }

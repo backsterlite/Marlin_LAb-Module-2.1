@@ -14,19 +14,23 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     $r->get( '/user/logout', ['App\controllers\UserController', 'logout']);
     $r->get( '/user/register', ['App\controllers\UserController', 'register']);
     $r->post( '/user/signup', ['App\controllers\UserController', 'signUp']);
-
     $r->get( '/user/email_verification', ['App\controllers\UserController', 'emailVerification']);
     $r->get( '/user/forgot_password', ['App\controllers\UserController', 'showForgotPasswordForm']);
     $r->post(  '/user/forgot_password', ['App\controllers\UserController', 'forgotPasswordInitiatingRequest']);
     $r->get(  '/user/reset_password', ['App\controllers\UserController', 'canResetPassword']);
     $r->post(  '/user/change_password', ['App\controllers\UserController', 'changePassword']);
-
     $r->get(  '/user/resend_email', ['App\controllers\UserController', 'resendEmailMessage']);
+    $r->get( '/user/profile/id/{id:\d+}', ['App\controllers\UserController', 'showProfile']);
+    $r->post( '/user/profile/id/{id:\d+}/edit/info', ['App\controllers\UserController', 'editProfileInfo']);
+    $r->get( '/user/profile/{id:\d+}/edit/security', ['App\controllers\UserController', 'editProfileSecurity']);
 
     $r->get( '/category/{id:\d+}', ['App\controllers\PostController', 'showCategory']);
 
 
     $r->get( '/post/{id:\d+}', ['App\controllers\PostController', 'showOne']);
+    $r->get( '/tag/{id:\d+}', ['App\controllers\PostController', 'showTag']);
+
+
 
     // {id} must be a number (\d+)
     $r->addRoute('GET', '/user/{id:\d+}', 'get_user_handler');
@@ -47,10 +51,12 @@ $uri = rawurldecode($uri);
 $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
 switch ($routeInfo[0]) {
     case FastRoute\Dispatcher::NOT_FOUND:
+        $container->call(['\App\controllers\ErrorsController', 'error404']);
         // ... 404 Not Found
         break;
     case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
         $allowedMethods = $routeInfo[1];
+        $container->call(['\App\controllers\ErrorsController', 'error405']);
         // ... 405 Method Not Allowed
         break;
     case FastRoute\Dispatcher::FOUND:

@@ -24,7 +24,6 @@
         <div class="row">
             <div class="col-lg-8">
                 <div class="row">
-                    <?php d($posts) ?>
                     <?php foreach($posts as $post): ?>
                     <div class="col-md-6">
                         <div class="single-recent-blog-post card-view">

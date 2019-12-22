@@ -39,6 +39,13 @@ return[
             'name' => 'Admin',
             'email' => 'Admin@backsterSite.com'
         ]
+    ],
+    'uploadsFolder' =>[
+        'user' => ['/public/assets/img/user/','/public/assets/img/user/no-user.jpg'],
+        'post' => ['/public/assets/img/post/','/public/assets/img/post/no-post.jpg']
+
+
+
 
     ]
 ];

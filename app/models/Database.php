@@ -142,14 +142,46 @@ class Database
     public function whereAll($table, $row, $value)
     {
         $select = $this->factory->newSelect();
+
         $select->cols(['*'])
             ->from($table)
             ->where("$row = :$row")
-            ->bindValue($row, $value);
+            ->bindValue(":$row", $value);
 
-        $sth = $this->pdo->prepare($select->getStatement());
+        $sth = $this->pdo->prepare( $select->getStatement());
 
-        return $sth->fetchAll(PDO::FETCH_ASSOC);
+        $sth->execute($select->getBindValues());
+       return $sth->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function getAllPostsWithTags($table, $row, $values)
+    {
+        $select = $this->factory->newSelect();
 
+            $select->cols(['*'])
+                ->from($table)
+                ->orderBy(['id DESC']);
+                foreach ($values as $value)
+                {
+                    $select->where("$row = :$row")
+                        ->bindValue(":$row", $value['post_id']);
+                }
+        $sth = $this->pdo->prepare("CREATE OR REPLACE VIEW postsT AS " . $select->getStatement());
+
+        $sth->execute($select->getBindValues());
+    }
+    public function update($table, $data, $row, $value)
+    {
+        $update = $this->factory->newUpdate();
+
+        $update
+            ->table($table)                  // update this table
+            ->cols($data)
+            ->where("$row = :$row")           // AND WHERE these conditions
+            ->bindValue(":$row", $value);
+
+        $sth = $this->pdo->prepare($update->getStatement());
+
+        // execute with bound values
+        return $sth->execute($update->getBindValues());
+    }
 }

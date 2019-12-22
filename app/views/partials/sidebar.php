@@ -59,7 +59,7 @@
                 <ul class="list">
                     <?php foreach(getTags() as $tag): ?>
                     <li>
-                        <a href="/tag/<?= $tag['id']?>"><?= $tag['title']?></a>
+                        <a href="/tag/<?= $tag['id']?>">#<?= $tag['title']?></a>
                     </li>
 
                     <?php endforeach; ?>

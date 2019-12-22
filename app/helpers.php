@@ -11,6 +11,7 @@ function components($name)
     return $container->get($name);
 
 }
+
 function getAllCategories()
 {
     global $container;
@@ -115,5 +116,9 @@ function acert($name, $width)
        return mb_strimwidth($name, 0, $width, '...');
     }
     return $name;
+}
+function getImage()
+{
+
 }
 
