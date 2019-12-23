@@ -26,9 +26,11 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
 
     $r->get( '/category/{id:\d+}', ['App\controllers\PostController', 'showCategory']);
 
-
-    $r->get( '/post/{id:\d+}', ['App\controllers\PostController', 'showOne']);
-    $r->get( '/tag/{id:\d+}', ['App\controllers\PostController', 'showTag']);
+    $r->get( '/post/slug/{slug}', ['App\controllers\PostController', 'showOne']);
+    $r->get( '/post/user/id/{id:\d+}', ['App\controllers\PostController', 'showAllPostsFromAutor']);
+    $r->get( '/post/create', ['App\controllers\PostController', 'create']);
+    $r->post( '/post/store', ['App\controllers\PostController', 'store']);
+    $r->get( '/post/tag/{id:\d+}', ['App\controllers\PostController', 'showTag']);
 
 
 

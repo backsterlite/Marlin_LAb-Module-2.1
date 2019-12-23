@@ -19,11 +19,11 @@
             <?php foreach ($featuredPosts  as $featuredPost): ?>
             <div class="card blog__slide text-center">
                 <div class="blog__slide__img">
-                    <img class="card-img rounded-0" src="<?php echo __DIR__ .'/'. $featuredPost['image'] ?>" alt="">
+                    <img class="card-img rounded-0" src="<?= getImage('post', $featuredPost['image'])?>" alt="">
                 </div>
                 <div class="blog__slide__content">
                     <a class="blog__slide__label" href="#">Show</a>
-                    <h3><a href="#"><?php echo $featuredPost['title']; ?></a></h3>
+                    <h3><a href="<?=config('link')['post'] . $featuredPost['slug'];?>"><?=$featuredPost['title']; ?></a></h3>
                     <p><?= diffDates(date('Y,m,d,H,i,s', strtotime($featuredPost['date'])), $now); ?></p>
                 </div>
             </div>
@@ -41,28 +41,27 @@
                 <?php foreach ($posts as $post): ?>
                 <div class="single-recent-blog-post">
                     <div class="thumb">
-                        <img class="img-fluid" src="<?php echo __DIR__ .'/'. $post['image'] ?>" alt="">
+                        <img class="img-fluid" src="<?= getImage('post', $post['image']) ?>" alt="">
                         <ul class="thumb-info">
-                            <li><a href="#"><i class="ti-user"></i><?php echo acert(getUser($post['user_id'])['username'], 10); ?></a></li>
-                            <li><a href="#"><i class="ti-notepad"></i><?= date('F d,Y', strtotime($post['date']))?></a></li>
-                            <li><a href="/post/comments/<?= $post['id'];?>"><i class="ti-themify-favicon"></i><?php echo commentsCount($post['id']);?> Comment(s)</a></li>
-                            <li><a href="#"><i class="ti-eye"></i><?= $post['views'];?> View(s)</a></li>
+                            <li><a href="<?= config('link')['autor'] . $post['user_id']?>"><i class="ti-user"></i><?php echo acert(getUser($post['user_id'])['username'], 10); ?></a></li>
+                            <li><a href="<?=config('link')['date'] . $post['created_at']?>"><i class="ti-notepad"></i><?= date('F d,Y', strtotime($post['date']))?></a></li>
+                            <li><i class="ti-themify-favicon"></i><?php echo commentsCount($post['id']);?> Comment(s)</li>
+                            <li><i class="ti-eye"></i><?= $post['views'];?> View(s)</li>
                         </ul>
                     </div>
                     <div class="details mt-20">
-                        <a href="/post/<?= $post['id'];?>">
-                            <h3><?= $post['description']?></h3>
+                        <a href="<?= config('link')['post'] . $post['slug'];?>">
+                            <h3><?= $post['title']?></h3>
                         </a>
-                        <p class="tag-list-inline">Tag: <?php foreach (getTags() as $tag): ?> <?php echo (end(getTags())['id'] != $tag['id'])?
-                                '<a href=" /tag/' . $tag['id'] . '">' .  $tag['title'] . '</a>,': '<a href=" /tag/' . $tag['id'] . '">' .
+                        <p class="tag-list-inline">Tag: <?php foreach (getTags() as $tag): ?> <?php echo'<a href=" /tag/' . $tag['id'] . '">' .
                                                                                     $tag['title'] . '</a>'?> <?php endforeach; ?></p>
-                        <p><?= $post['content']?></p>
-                        <a class="button" href="#">Read More <i class="ti-arrow-right"></i></a>
+                        <p><?= $post['description']?></p>
+                        <a class="button" href="<?= config('link')['post'] . $post['slug'];?>">Read More <i class="ti-arrow-right"></i></a>
                     </div>
                 </div>
                 <?php endforeach; ?>
             </div><!-- Start Blog Post Siddebar -->
-            <?= $this->insert('partials/sidebar', ['categories' => $categories, 'popularPosts' => $popularPosts, 'tags' => $tags])?>
+            <?= $this->insert('partials/sidebar')?>
             <!-- End Blog Post Siddebar -->
         </div>
         <?= $this->insert('partials/paginate', ['paginator' => $paginator])?>

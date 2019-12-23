@@ -169,6 +169,48 @@ class Database
 
         $sth->execute($select->getBindValues());
     }
+    public  function store($table, $data)
+    {
+        $insert = $this->factory->newInsert();
+
+        $insert
+            ->into($table)                   // INTO this table
+            ->cols($data);
+
+        // prepare the statement
+        $sth = $this->pdo->prepare($insert->getStatement());
+
+        // execute with bound values
+        $sth->execute($insert->getBindValues());
+        // get the last insert ID
+        $name = $insert->getLastInsertIdName('id');
+        return $this->pdo->lastInsertId($name);
+    }
+    public function multiStore($table, $data)
+    {
+        $insert = $this->factory->newInsert();
+
+        $counter = count($data);
+        for($i = 0; $i < $counter; $i++)
+        {
+            // insert into this table
+            $insert->into($table)
+                    ->cols($data[$i]);
+
+            // set up the second row. the columns here are in a different order
+            // than in the first row, but it doesn't matter; the INSERT object
+            // keeps track and builds them the same order as the first row.
+            $insert->addRow();
+
+        }
+
+        // prepare the statement
+        $sth = $this->pdo->prepare($insert->getStatement());
+
+        // execute with bound values
+        $sth->execute($insert->getBindValues());
+
+    }
     public function update($table, $data, $row, $value)
     {
         $update = $this->factory->newUpdate();

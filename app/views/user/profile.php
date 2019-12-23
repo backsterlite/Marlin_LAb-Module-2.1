@@ -7,6 +7,7 @@
                     <div class="card-header"><h3>Профиль пользователя</h3></div>
 
                     <div class="card-body">
+                        <?= flash()?>
                         <form action="/user/profile/id/<?= components(\Delight\Auth\Auth::class)->getUserId();?>/edit/info" method="post" enctype="multipart/form-data">
                             <div class="row">
                                 <div class="col-md-8">
@@ -14,7 +15,7 @@
                                         <label for="exampleFormControlInput5">Name</label>
 
                                         <div class="col-md-6">
-                                            <input type="text" class="form-control " name="login" id="exampleFormControlInput5" value="<?= $user['username']?>">
+                                            <input type="text" class="form-control " name="username" id="exampleFormControlInput5" value="<?= $user['username']?>">
 
                                         </div>
                                     </div>
@@ -31,12 +32,12 @@
                                     <div class="form-group">
                                         <label for="exampleFormControlInput7">Аватар</label>
                                         <div class="col-md-6">
-                                            <input type="file" class="form-control <?=  @$_COOKIE['file_error'];?>" name="image" id="exampleFormControlInput7">
+                                            <input type="file" class="form-control " name="image" id="exampleFormControlInput7">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <img src="/public/assets/img/team/team1.png" alt="" class="img-fluid">
+                                    <img src="<?= getImage('user', $user['image'])?>" alt="" class="img-fluid">
                                 </div>
 
                                 <div class="col-md-12">

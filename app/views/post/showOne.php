@@ -25,12 +25,12 @@
         <div class="row">
             <div class="col-lg-8">
                 <div class="main_blog_details">
-                    <img class="img-fluid" src="<?= __DIR__ . '/'. $post['image']?>" alt="">
+                    <img class="img-fluid" src="<?= getImage('post', $post['image'])?>" alt="">
                     <a href="#"><h4><?= acert($post['title'], 35)?></h4></a>
                     <div class="user_details">
                         <div class="float-left">
                             <?php foreach (getTags() as $tag):?>
-                            <a href="/post/tag/<?= $tag['slug']?>"><?= $tag['title']?></a>
+                            <a href="/post/tag/<?= $tag['id']?>"><?= $tag['title']?></a>
                             <?php endforeach; ?>
                         </div>
                         <div class="float-right mt-sm-0 mt-3">
@@ -40,7 +40,7 @@
                                     <p><?= date('d M, Y H:i', strtotime($post['date']))?></p>
                                 </div>
                                 <div class="d-flex">
-                                    <img width="42" height="42" src="<?= __DIR__ . getUser($post['user_id'])['image']?>" alt="">
+                                    <img width="42" height="42" src="<?= getImage('user',getUser($post['user_id'])['image'])?>" alt="">
                                 </div>
                             </div>
                         </div>
@@ -54,8 +54,7 @@
                         <div class="single-comment justify-content-between d-flex">
                             <div class="user justify-content-between d-flex">
                                 <div class="thumb">
-                                    <img width="60" src="<?= (getUser($comment['user_id'])['image'])?
-                                        __DIR__ . '/' . getUser($comment['user_id'])['image']: '/public/assets/img/user/no-user.png'?>" alt="">
+                                    <img width="60" src="<?= getImage('user', getUser($comment['user_id'])['image'])?>" alt="">
                                 </div>
                                 <div class="desc">
                                     <h5><a href="#"><?= getUser($comment['user_id'])['username']?></a></h5>

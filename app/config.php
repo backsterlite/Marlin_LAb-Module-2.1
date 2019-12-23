@@ -41,11 +41,19 @@ return[
         ]
     ],
     'uploadsFolder' =>[
-        'user' => ['/public/assets/img/user/','/public/assets/img/user/no-user.jpg'],
+        'user' => ['/public/assets/img/user/','/public/assets/img/user/no-user.png'],
         'post' => ['/public/assets/img/post/','/public/assets/img/post/no-post.jpg']
-
-
-
-
+    ],
+    'link' =>[
+        'post'        => '/post/slug/',
+        'autor'       => '/post/user/id/',
+        'date'        => '/post/date/',
+        'profile'     => '/user/profile/id/',
+        'tag'         => '/tag/',
+        'home'        => '/',
+        'userProfile' => '/user/profile/id',
+        'category'    => '/category'
     ]
+
+
 ];

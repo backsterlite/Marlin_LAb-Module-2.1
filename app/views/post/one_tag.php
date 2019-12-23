@@ -28,14 +28,14 @@
                         <div class="col-md-6">
                             <div class="single-recent-blog-post card-view">
                                 <div class="thumb">
-                                    <img class="card-img rounded-0" src="img/blog/thumb/thumb-card1.png" alt="">
+                                    <img class="card-img rounded-0" src="<?= getImage('post', $post['image'])?>" alt="">
                                     <ul class="thumb-info">
                                         <li><a href="#"><i class="ti-user"></i><?= acert(getUser($post['user_id'])['username'], 10)?></a></li>
                                         <li><a href="#"><i class="ti-themify-favicon"></i><?= commentsCount($post['id'])?> Comments</a></li>
                                     </ul>
                                 </div>
                                 <div class="details mt-20">
-                                    <a href="/post/<?= $post['id']?>">
+                                    <a href="/post/<?= $post['slug']?>">
                                         <h3><?= $post['title']?></h3>
                                     </a>
                                     <p><?= $post['description']?></p>

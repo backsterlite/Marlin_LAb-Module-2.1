@@ -34,17 +34,17 @@
             <div class="single-sidebar-widget popular-post-widget">
                 <h4 class="single-sidebar-widget__title">Popular Post</h4>
                 <div class="popular-post-list">
-                    <?php foreach(getPopularPosts() as$popularPost): ?>
+                    <?php foreach(getPopularPosts() as $popularPost): ?>
                     <div class="single-post-list">
                         <div class="thumb">
-                            <img class="card-img rounded-0" src="/public/assets/img/blog/thumb/thumb1.png" alt="">
+                            <img class="card-img rounded-0" src="<?= getImage('post', $popularPost['image'])?>" alt="">
                             <ul class="thumb-info">
-                                <li><a href="#"><?= (strlen(getUser($popularPost['user_id'])['username']) > 12)? substr(getUser($popularPost['user_id'])['username'], 0, 10) . '..':getUser($popularPost['user_id'])['username'];?></a></li>
-                                <li><a href="#"><?= date('M d', strtotime($popularPost['date']))?></a></li>
+                                <li><a href="<?= config('link')['autor'] . $popularPost['user_id']?>"><?= acert(getUser($popularPost['user_id'])['username'], 10)?></a></li>
+                                <li><a href="<?= config('link')['date'] . $popularPost['created_at']?>"><?= date('M d', strtotime($popularPost['date']))?></a></li>
                             </ul>
                         </div>
                         <div class="details mt-20">
-                            <a href="blog-single.html">
+                            <a href="<?=config('link')['post'] . $popularPost['slug']?>">
                                 <h6><?= $popularPost['title']?></h6>
                             </a>
                         </div>
@@ -59,7 +59,7 @@
                 <ul class="list">
                     <?php foreach(getTags() as $tag): ?>
                     <li>
-                        <a href="/tag/<?= $tag['id']?>">#<?= $tag['title']?></a>
+                        <a href="<?= config('link')['tag'] . $tag['id']?>">#<?= $tag['title']?></a>
                     </li>
 
                     <?php endforeach; ?>

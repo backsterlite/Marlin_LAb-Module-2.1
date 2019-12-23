@@ -73,6 +73,23 @@ $(function() {
 		$('#mc_embed_signup').find('form').ajaxChimp();
 	}
   mailChimp();
+
+    function sel_bnk(bnk) {
+        var id = bnk.val();
+        var name = bnk.text();
+        if($("#_tags span#tag_" + id).length == 0 && id != '') {
+            $("#_tags").append("<span class='label label-info' id='tag_" + id + "'>" + name + " &nbsp;<a href onclick='remove_tag(" + id + ",event)'>x</a></span>");
+            $('form#form input#_id').val($('form#form input#_id').val() + id + ',');
+        }
+    }
+
+    function remove_tag(id,event) {
+        event.preventDefault();
+        $("#_tags #tag_" + id).remove();
+        var string = $("input#_id").val();
+        $("input#_id").val(string.replace(id + ",", ""));
+        return false;
+    }
   
 });
 

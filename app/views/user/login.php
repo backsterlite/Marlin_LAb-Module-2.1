@@ -22,7 +22,7 @@
                     <div class="form-check">
                         <input class="form-check-input" name="remember" type="checkbox" id="disabledFieldsetCheck" >
                         <label class="form-check-label" for="disabledFieldsetCheck">
-                             Check me out
+                             Remember me
                         </label>
                     </div>
                 </div

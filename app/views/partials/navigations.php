@@ -13,14 +13,14 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                     <ul class="nav navbar-nav menu_nav justify-content-center">
-                        <li class="nav-item active"><a class="nav-link" href="/">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/user/profile/id/<?= components(\Delight\Auth\Auth::class)->getUserId();?>">Profile</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/category">Category</a>
+                        <li class="nav-item active"><a class="nav-link" href="<?= config('link')['home']?>">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= config('link')['userProfile'] . components(\Delight\Auth\Auth::class)->getUserId();?>">Profile</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= config('link')['category']?>">Category</a>
                         <li class="nav-item submenu dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                               aria-expanded="false">Add</a>
+                               aria-expanded="false">Post</a>
                             <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href="/post/new">Post</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/post/create">Add</a></li>
                             </ul>
                         </li>
                         <li class="nav-item"><a class="nav-link" href="/post/my-posts">My Posts</a></li>
@@ -52,17 +52,8 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                     <ul class="nav navbar-nav menu_nav justify-content-center">
-                        <li class="nav-item active"><a class="nav-link" href="/">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="archive.html">Archive</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/category">Category</a>
-                        <li class="nav-item submenu dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                               aria-expanded="false">Pages</a>
-                            <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href="blog-details.html">Blog Details</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                        <li class="nav-item active"><a class="nav-link" href="<?= config('link')['home']?>">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= config('link')['category']?>">Category</a>
                     </ul>
                     <ul class="nav navbar-nav navbar-right navbar-social">
                         <li><a href="/user/login" ><i class="ti-lock mr-2"></i></a>|</li>

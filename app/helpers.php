@@ -41,7 +41,7 @@ function getUser($id)
 {
     global $container;
     $factory = $container->get(\App\models\Database::class);
-    return $res = $factory->find('users', 'id', $id);
+    return $factory->find('users', 'id', $id);
 }
 function diffDates($base, $now)
 {
@@ -117,8 +117,10 @@ function acert($name, $width)
     }
     return $name;
 }
-function getImage()
+function getImage($folder, $file)
 {
-
+    global $container;
+    $manager = $container->get(\App\models\ImageManager::class);
+    return $manager->getImage($folder, $file);
 }
 

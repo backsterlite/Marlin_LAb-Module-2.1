@@ -37,13 +37,12 @@ class UserController extends Controller
         {
             $request = $_POST['request'];
             $rememberDuration = null;
-            if($_POST['remember'] == "1")
+            if(isset($_POST['remember']))
             {
                 $rememberDuration = (int) (60 * 60 * 24 * 365.25);
             }
             try {
                 $this->auth->login($_POST['email'], $_POST['password'], $rememberDuration);
-                flash()->success('User is logged in');
                 redirect($request);
                 exit;
 
@@ -411,16 +410,16 @@ class UserController extends Controller
             back();
             exit;
         }
-        if($file)
-        {
-            $image = $this->database->find('users', 'id', $id);
+        if($file) {
             $data = [
-                'username' => $_POST['username'],
-                'email'    => $_POST['emai'],
-                'image'    => '$file'
+                'image'    => $file
             ];
+        }
+            $image = $this->database->find('users', 'id', $id);
             if($this->validateProfileChangeInfo())
             {
+                $data['username'] = $_POST['username'] ;
+                $data['email'] = $_POST['email'];
                 try{
                     $this->database->update('users', $data, 'id', $id);
                 }catch (\Exception $e)
@@ -429,12 +428,15 @@ class UserController extends Controller
                     back();
                     exit;
                 }
-                $this->manager->add($_FILES['image'], 'user', $file, $image['image']);
+                if($file) {
+                    $this->manager->add($_FILES['image'], 'user', $file, $image['image']);
+                }
+
                 flash()->success('Данные успешно обновлены');
                 back();
                 exit;
             }
-        }
+
 
     }
 

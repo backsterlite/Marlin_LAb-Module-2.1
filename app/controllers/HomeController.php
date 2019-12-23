@@ -34,7 +34,7 @@ class HomeController extends Controller
         $paginator = new Paginator($totalItems, $itemsPerPage, $currentPage, $urlPattern);
 
         $posts = $this->database->getPaginated('posts', $currentPage, $itemsPerPage);
-        $featuredPosts = $this->database->getFields('posts', 'is_featured', 8);
+        $featuredPosts = $this->database->getFields('posts', 1 , 'is_featured', 8);
         $now = Carbon::now('Europe/Kiev');
         echo $this->view->render('home', compact('posts', 'featuredPosts', 'tags',
                                                         'now','categories', 'popularPosts','paginator'));
@@ -51,7 +51,7 @@ class HomeController extends Controller
         $posts = $this->post->getOnePostFromCategories('posts',  'category');
         $comments = $this->database->allASC('comments');
         $now = Carbon::now('Europe/Kiev');
-        echo $this->view->render('category/index', compact('posts', 'featuredPosts',
+        echo $this->view->render('post/category/index', compact('posts', 'featuredPosts',
             'comments', 'now','paginator'));
     }
 
