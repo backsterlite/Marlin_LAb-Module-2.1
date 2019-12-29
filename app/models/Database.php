@@ -136,7 +136,8 @@ class Database
         $select->cols(['*'])
             ->from($table)
             ->page($page)
-            ->setPaging($rows);
+            ->setPaging($rows)
+            ->orderBy(['id DESC']);
         $sth = $this->pdo->prepare($select->getStatement());
 
         $sth->execute($select->getBindValues());

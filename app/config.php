@@ -54,6 +54,11 @@ return[
         'userProfile' => '/user/profile/id/',
         'category'    => '/category'
     ]
+    // Данные для входа
+    /*
+     * Login - coilofluck@gmail.com
+     * password - test1
+     * */
 
 
 ];

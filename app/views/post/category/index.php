@@ -30,8 +30,8 @@
                             <div class="thumb">
                                 <img class="card-img rounded-0" src="<?= getImage('post', $post['image'])?>" alt="">
                                 <ul class="thumb-info">
-                                    <li><a href="#"><i class="ti-user"></i><?= acert(getUser($post['user_id'])['username'], 10)?></a></li>
-                                    <li><a href="#"><i class="ti-themify-favicon"></i><?= commentsCount($post['id']);?> Comments</a></li>
+                                    <li><a href="<?= config('link')['autor'] . $post['user_id']?>"><i class="ti-user"></i><?= acert(getUser($post['user_id'])['username'], 10)?></a></li>
+                                    <li><i class="ti-themify-favicon"></i><?= commentsCount($post['id']);?> Comments</li>
                                 </ul>
                             </div>
                             <div class="details mt-20 text-md-center">
