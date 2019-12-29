@@ -77,15 +77,33 @@ class Database
 
         return $sth->fetchAll(PDO::FETCH_ASSOC);
     }
-
-    public function find($table, $field, $value)
+    public function findWhereAndWhere($table, $field1, $value1, $field2, $value2)
     {
         $select = $this->factory->newSelect();
 
         $select->cols(['*'])
             ->from($table)
-            ->where($field . ' = :value')
-            ->bindValue(':value', $value);
+            ->where("$field1=:$field1")
+            ->where("$field2=:$field2")
+            ->bindValue(":$field1", $value1)
+            ->bindValue(":$field2", $value2);
+        $sth = $this->pdo->prepare($select->getStatement());
+        // bind the values and execute
+        $sth->execute($select->getBindValues());
+
+        // get the results back as an associative array
+
+        return $sth->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function find($table, $field, $value )
+    {
+        $select = $this->factory->newSelect();
+
+        $select->cols(['*'])
+            ->from($table)
+            ->where("$field=:$field")
+            ->bindValue(":$field", $value);
         $sth = $this->pdo->prepare($select->getStatement());
         // bind the values and execute
         $sth->execute($select->getBindValues());
@@ -101,7 +119,7 @@ class Database
         $select->cols(['*'])
             ->from($table)
             ->where("$row = :$row")
-            ->bindValue(":$row", (int)$id)
+            ->bindValue(":$row", $id)
             ->page($page)
             ->setPaging($rows)
             ->orderBy(['id DESC']);
@@ -153,19 +171,19 @@ class Database
         $sth->execute($select->getBindValues());
        return $sth->fetchAll(PDO::FETCH_ASSOC);
     }
-    public function getAllPostsWithTags($table, $row, $values)
+    public function getAllWith($tableOut, $tableIn, $row, $values)
     {
         $select = $this->factory->newSelect();
 
             $select->cols(['*'])
-                ->from($table)
+                ->from($tableOut)
                 ->orderBy(['id DESC']);
                 foreach ($values as $value)
                 {
                     $select->where("$row = :$row")
-                        ->bindValue(":$row", $value['post_id']);
+                        ->bindValue(":$row", $value);
                 }
-        $sth = $this->pdo->prepare("CREATE OR REPLACE VIEW postsT AS " . $select->getStatement());
+        $sth = $this->pdo->prepare("CREATE OR REPLACE VIEW $tableIn AS " . $select->getStatement());
 
         $sth->execute($select->getBindValues());
     }
@@ -223,7 +241,21 @@ class Database
 
         $sth = $this->pdo->prepare($update->getStatement());
 
-        // execute with bound values
+        // execute with bound value
         return $sth->execute($update->getBindValues());
+    }
+    public function delete($table, $row, $value)
+    {
+        $delete = $this->factory->newDelete();
+
+        $delete
+            ->from($table)                   // FROM this table
+            ->where("$row=:$row")           // AND WHERE these conditions
+            ->bindValue(":$row", $value);
+        // prepare the statement
+        $sth = $this->pdo->prepare($delete->getStatement());
+
+        // execute with bound values
+        $sth->execute($delete->getBindValues());
     }
 }

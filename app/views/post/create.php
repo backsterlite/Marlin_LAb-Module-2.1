@@ -42,15 +42,15 @@
                                         <label for="exampleFormControlInput6"> Перечислите теги через запятую</label>
 
                                         <div class="col-md-8 offset-2">
-                                    <select id="banks_select" class="input-group-addon" style="width: 50%;" onchange="sel_bnk($('option:selected',this))">
-                                        <option>Выберите</option>
-                                        <?php foreach(getTags() as $tag): ?>
-                                        <option value="<?= $tag['title']?>"><?= $tag['title']?></option>
-                                       <?php endforeach; ?>
-                                    </select>
-                                    <div  id="_tags"></div>
+                                            <select id="banks_select" class="input-group-addon" style="width: 50%;" onchange="sel_bnk($('option:selected',this))">
+                                                <option>Выберите</option>
+                                                <?php foreach(getTags() as $tag): ?>
+                                                <option value="<?= $tag['title']?>"><?= $tag['title']?></option>
+                                               <?php endforeach; ?>
+                                            </select>
+                                            <div  id="_tags"></div>
 
-                                        <input type="text" id="_id" name="tag" class="form-control" value="">
+                                            <input type="text" id="_id" name="tag" class="form-control" value="">
                                         </div>
                                     </div>
 
@@ -74,21 +74,15 @@
     </div>
 </main>
 <script>
-    function sel_bnk(bnk) {
-        var id = bnk.val();
-        var name = bnk.text();
-        if($("#_tags span#tag_" + id).length == 0 && id != '') {
-            $("#_tags").append("<span class='label label-info' id='tag_" + id + "'>" + name + " &nbsp;<a href onclick='remove_tag(" + id + ",event)'>x</a></span>");
-            $('form#form input#_id').val($('form#form input#_id').val() + id + ',');
-        }
-    }
 
-    function remove_tag(id,event) {
-        event.preventDefault();
-        $("#_tags #tag_" + id).remove();
-        var string = $("input#_id").val();
-        $("input#_id").val(string.replace(id + ",", ""));
-        return false;
-    }
+      function sel_bnk(bnk) {
+          var id = bnk.val();
+          var name = bnk.text();
+          if($("#_tags span#tag_" + id).length == 0 && id != '') {
+              $('form#form input#_id').val($('form#form input#_id').val() + id + ',');
+          }
+      }
+
+
 
 </script>

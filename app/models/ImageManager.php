@@ -41,37 +41,65 @@ class ImageManager
 
 
             if($this->checkExists($folder, $currentImage)) $this->delete($folder, $currentImage);
-            $image = Image::make($newImage['tmp_name']);
+            if(is_array($newImage))
+            {
+                $image = Image::make($newImage['tmp_name']);
+            }elseif(is_string($newImage))
+            {
+                $image = Image::make($newImage);
+            }
+
             $image->save( dirname(dirname(__DIR__)) . $this->folder[$folder][0].$file);
             return true;
 
     }
 
-    public function checkExists($folder, $file)
+    public function checkExists($folder, $file = '1')
     {
         if($folder == 'user')
         {
-        if(file_exists(dirname(dirname(__DIR__)) . $this->folder[$folder][0].$file))
-        {
-            return true;
-        }
-        return false;
+            if($file == '')
+            {
+                $file = '1';
+                if(file_exists(dirname(dirname(__DIR__)) . $this->folder[$folder][0].$file))
+                {
+                    return true;
+                }
+            }else{
+                if(file_exists(dirname(dirname(__DIR__)) . $this->folder[$folder][0].$file))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }elseif($folder == 'post')
         {
-        if(file_exists(dirname(dirname(__DIR__)) . $this->folder[$folder][0].$file))
-        {
-            return true;
-        }
-        return false;
+            if($file == '')
+            {
+                $file = '1';
+                if(file_exists(dirname(dirname(__DIR__)) . $this->folder[$folder][0].$file))
+                {
+                    return true;
+                }
+            }else
+            {
+                if(file_exists(dirname(dirname(__DIR__)) . $this->folder[$folder][0].$file))
+                {
+                    return true;
+                }
+            }
+
+             return false;
         }
         return null;
     }
 
-    public function delete($folder, $file)
+    public function delete($folder, $file = '1')
     {
-        if(unlink(dirname(dirname(__DIR__)) . $this->folder[$folder][0].$file))
+        if($this->checkExists($folder, $file))
         {
-            return true;
+            unlink(dirname(dirname(__DIR__)) . $this->folder[$folder][0].$file);
         }
            return null;
 

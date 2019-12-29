@@ -27,12 +27,16 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     $r->get( '/category/{id:\d+}', ['App\controllers\PostController', 'showCategory']);
 
     $r->get( '/post/slug/{slug}', ['App\controllers\PostController', 'showOne']);
+    $r->post( '/post/comment/send/id/{id:\d+}', ['App\controllers\PostController', 'addComment']);
+    $r->get( '/post/id/{id:\d+}/edit', ['App\controllers\PostController', 'editPost']);
+    $r->post( '/post/id/{id:\d+}/update', ['App\controllers\PostController', 'updatePost']);
+    $r->get( '/post/id/{id:\d+}/delete', ['App\controllers\PostController', 'deletePost']);
     $r->get( '/post/user/id/{id:\d+}', ['App\controllers\PostController', 'showAllPostsFromAutor']);
+    $r->get( '/post/date/{date}', ['App\controllers\PostController', 'showAllPostsFromDate']);
     $r->get( '/post/create', ['App\controllers\PostController', 'create']);
+    $r->get( '/post/add', ['App\controllers\PostController', 'addXNotes']);
     $r->post( '/post/store', ['App\controllers\PostController', 'store']);
     $r->get( '/post/tag/{id:\d+}', ['App\controllers\PostController', 'showTag']);
-
-
 
     // {id} must be a number (\d+)
     $r->addRoute('GET', '/user/{id:\d+}', 'get_user_handler');
@@ -65,6 +69,5 @@ switch ($routeInfo[0]) {
         $handler = $routeInfo[1];
         $vars = $routeInfo[2];
         $container->call($handler, $vars);
-        // ... call $handler with $vars
         break;
 }

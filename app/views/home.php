@@ -50,13 +50,13 @@
                         </ul>
                     </div>
                     <div class="details mt-20">
-                        <a href="<?= config('link')['post'] . $post['slug'];?>">
+                        <a href="<?= config('link')['post'] .'slug/'. $post['slug'];?>">
                             <h3><?= $post['title']?></h3>
                         </a>
-                        <p class="tag-list-inline">Tag: <?php foreach (getTags() as $tag): ?> <?php echo'<a href=" /tag/' . $tag['id'] . '">' .
+                        <p class="tag-list-inline">Tag: <?php foreach (getPostTags($post['id']) as $tag): ?> <?php echo'<a href=" /tag/' . $tag['id'] . '">' .
                                                                                     $tag['title'] . '</a>'?> <?php endforeach; ?></p>
-                        <p><?= $post['description']?></p>
-                        <a class="button" href="<?= config('link')['post'] . $post['slug'];?>">Read More <i class="ti-arrow-right"></i></a>
+                        <p><?= $post['description'] . '...'?></p>
+                        <a class="button" href="<?= config('link')['post'].'slug/'. $post['slug'];?>">Read More <i class="ti-arrow-right"></i></a>
                     </div>
                 </div>
                 <?php endforeach; ?>

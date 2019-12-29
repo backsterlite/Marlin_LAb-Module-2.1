@@ -1,15 +1,15 @@
-<?php $this->layout('layout', ['title' =>  "{$user['username']} Posts"]) ?>
+<?php $this->layout('layout', ['title' =>  "Posts at {$post['created_at']} "]) ?>
 
 <!--================ Hero sm Banner start =================-->
 <section class="mb-30px">
     <div class="container">
         <div class="hero-banner hero-banner--sm">
             <div class="hero-banner__content">
-                <h1><?= $user['username']?> Posts </h1>
+                <h1>Posts at <?= $post['created_at']?>  </h1>
                 <nav aria-label="breadcrumb" class="banner-breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page"><?= $user['username']?>  </li>
+                        <li class="breadcrumb-item active" aria-current="page"><?= $post['created_at']?>  </li>
                     </ol>
                 </nav>
             </div>

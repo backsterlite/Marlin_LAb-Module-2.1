@@ -5,7 +5,7 @@
     <div class="container">
         <div class="hero-banner hero-banner--sm">
             <div class="hero-banner__content">
-                <h1><?= $category['title']?> Category </h1>
+                <h1>&lang;<?= $category['title']?>&rang; Category </h1>
                 <nav aria-label="breadcrumb" class="banner-breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/">Home</a></li>
@@ -30,7 +30,7 @@
                             <div class="thumb">
                                 <img class="card-img rounded-0" src="<?= getImage('post', $post['image'])?>" alt="">
                                 <ul class="thumb-info">
-                                    <li><a href="#"><i class="ti-user"></i><?= acert(getUser($post['user_id'])['username'], 10)?></a></li>
+                                    <li><a href="<?= config('link')['autor'] . components(\Delight\Auth\Auth::class)->getUserId()?>"><i class="ti-user"></i><?= acert(getUser($post['user_id'])['username'], 10)?></a></li>
                                     <li><a href="#"><i class="ti-themify-favicon"></i><?= commentsCount($post['id'])?> Comments</a></li>
                                 </ul>
                             </div>

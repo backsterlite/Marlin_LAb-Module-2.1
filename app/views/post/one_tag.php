@@ -5,7 +5,7 @@
     <div class="container">
         <div class="hero-banner hero-banner--sm">
             <div class="hero-banner__content">
-                <h1><?= $tag['title']?> Tag </h1>
+                <h1>&lang;<?= $tag['title']?>&rang; Tag </h1>
                 <nav aria-label="breadcrumb" class="banner-breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/">Home</a></li>

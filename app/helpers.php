@@ -22,7 +22,7 @@ function getPopularPosts()
 {
     global $container;
     $factory = $container->get(\App\models\Database::class);
-    return $factory->allDESC('posts', 'views', 8);
+    return $factory->allDESC('posts', 'views', 3);
 }
 
 function getTags()
@@ -123,4 +123,15 @@ function getImage($folder, $file)
     $manager = $container->get(\App\models\ImageManager::class);
     return $manager->getImage($folder, $file);
 }
-
+function getPostTags($post_id)
+{
+    global $container;
+    $factory = $container->get(\App\models\Database::class);
+    $tags =  $factory->whereAll('post_tags', 'post_id', $post_id);
+    $tagsArray = [];
+    foreach ($tags as $tag)
+    {
+        $tagsArray[] = $factory->find('tags', 'id', $tag['tag_id']);
+    }
+    return $tagsArray;
+}

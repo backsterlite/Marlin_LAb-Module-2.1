@@ -75,7 +75,7 @@
                                     <div class="form-group">
                                         <label for="exampleFormControlInput3">Password confirmation</label>
                                         <div class="col-md-6">
-                                            <input type="password" name="password_confirmation" class="form-control <?= @$_COOKIE['confirm_error_msg'];?>" id="exampleFormControlInput3">
+                                            <input type="password" name="password_confirmation" class="form-control " id="exampleFormControlInput3">
                                         </div>
 
                                     </div>

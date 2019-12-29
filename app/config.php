@@ -45,13 +45,13 @@ return[
         'post' => ['/public/assets/img/post/','/public/assets/img/post/no-post.jpg']
     ],
     'link' =>[
-        'post'        => '/post/slug/',
+        'post'        => '/post/',
         'autor'       => '/post/user/id/',
         'date'        => '/post/date/',
         'profile'     => '/user/profile/id/',
-        'tag'         => '/tag/',
+        'tag'         => '/post/tag/',
         'home'        => '/',
-        'userProfile' => '/user/profile/id',
+        'userProfile' => '/user/profile/id/',
         'category'    => '/category'
     ]
 

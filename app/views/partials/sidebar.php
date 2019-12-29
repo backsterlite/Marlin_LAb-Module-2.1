@@ -40,7 +40,7 @@
                             <img class="card-img rounded-0" src="<?= getImage('post', $popularPost['image'])?>" alt="">
                             <ul class="thumb-info">
                                 <li><a href="<?= config('link')['autor'] . $popularPost['user_id']?>"><?= acert(getUser($popularPost['user_id'])['username'], 10)?></a></li>
-                                <li><a href="<?= config('link')['date'] . $popularPost['created_at']?>"><?= date('M d', strtotime($popularPost['date']))?></a></li>
+                                <li><a href="<?= config('link')['date'] .$popularPost['created_at']?>"><?= date('M d', strtotime($popularPost['date']))?></a></li>
                             </ul>
                         </div>
                         <div class="details mt-20">

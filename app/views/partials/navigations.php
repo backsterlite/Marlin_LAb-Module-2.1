@@ -21,9 +21,10 @@
                                aria-expanded="false">Post</a>
                             <ul class="dropdown-menu">
                                 <li class="nav-item"><a class="nav-link" href="/post/create">Add</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/post/add">AddXNotes</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="/post/my-posts">My Posts</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= config('link')['autor'] .components(\Delight\Auth\Auth::class)->getUserId();?>">My Posts</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right navbar-social">
                         <li><a href="/user/logout" ><i class="ti-unlock mr-2"></i></a>|</li>
