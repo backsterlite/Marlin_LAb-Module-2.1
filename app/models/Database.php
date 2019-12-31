@@ -239,11 +239,11 @@ class Database
             ->cols($data)
             ->where("$row = :$row")           // AND WHERE these conditions
             ->bindValue(":$row", $value);
-
         $sth = $this->pdo->prepare($update->getStatement());
-
         // execute with bound value
-        return $sth->execute($update->getBindValues());
+
+        $res = $sth->execute($update->getBindValues());
+        return $res;
     }
     public function delete($table, $row, $value)
     {

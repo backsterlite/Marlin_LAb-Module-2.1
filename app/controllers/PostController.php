@@ -30,7 +30,7 @@ class PostController extends Controller
     public function showCategory($id)
     {
         $totalItems = $this->database->getCount('posts', 'category_id', $id);
-        $itemsPerPage = 2;
+        $itemsPerPage = 8;
         $currentPage = ($_GET['page'])?? 1;
         $urlPattern ='?page=(:num)';
 
@@ -76,16 +76,22 @@ class PostController extends Controller
 
         $paginator = new Paginator($totalItems, $itemsPerPage, $currentPage, $urlPattern);
         $postValues = $this->database->whereAll('post_tags', 'tag_id', $id);
-        foreach ($postValues as $postValue)
+        if(!empty($postValues))
         {
-            $values[] = $postValue['post_id'];
+            foreach ($postValues as $postValue)
+            {
+                $values[] = $postValue['post_id'];
+                $this->database->getAllWith('posts', 'postsT', 'id', $values);
+                $tag = $this->database->find('tags', 'id', $id);
+                $posts = $this->database->getPaginated('postsT',  $currentPage, $itemsPerPage);
+                $now = Carbon::now('Europe/Kiev');
+                echo $this->view->render('post/one_tag', compact('posts',
+                    'comments', 'now','paginator', 'tag'));
+            }
         }
-        $this->database->getAllWith('posts', 'postsT', 'id', $values);
         $tag = $this->database->find('tags', 'id', $id);
-        $posts = $this->database->getPaginated('postsT',  $currentPage, $itemsPerPage);
-        $now = Carbon::now('Europe/Kiev');
-        echo $this->view->render('post/one_tag', compact('posts',
-            'comments', 'now','paginator', 'tag'));
+        echo $this->view->render('post/empty_tag', compact('tag'));
+
     }
 
     public function showAllPostsFromAutor($id)
@@ -438,7 +444,7 @@ class PostController extends Controller
                     'post_id' => $id
             ];
                 $this->database->store('comments',$data);
-                flash()->success('Сообщение добавлено');
+                flash()->success('Сообщение отправлено на модерацию. Оно скоро появиться');
                 back();
                 exit;
             }
@@ -452,7 +458,7 @@ class PostController extends Controller
                     'post_id' => $id
                 ];
                 $this->database->store('comments',$data);
-                flash()->success('Сообщение добавлено');
+                flash()->success('Сообщение отправлено на модерацию. Оно скоро появиться');
                 back();
                 exit;
             }

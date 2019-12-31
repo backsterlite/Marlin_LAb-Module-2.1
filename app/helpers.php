@@ -24,6 +24,25 @@ function getPopularPosts()
     $factory = $container->get(\App\models\Database::class);
     return $factory->allDESC('posts', 'views', 3);
 }
+function getPost($postId)
+{
+    global $container;
+    $factory = $container->get(\App\models\Database::class);
+    return $factory->find('posts', 'id', $postId);
+}
+function dataBaseCounterAll($table)
+{
+    global $container;
+    $factory = $container->get(\App\models\Database::class);
+    return count($factory->AllASC($table));
+}
+function dataBaseCounterWhere($table, $row, $value)
+{
+    global $container;
+    $factory = $container->get(\App\models\Database::class);
+    return $factory->getCount($table, $row, $value);
+}
+
 
 function getTags()
 {
@@ -99,6 +118,13 @@ function redirect($path)
 {
     header('Location:' .$path);
 }
+function abort($key = 404)
+{
+    global $container;
+    $container->call(['\App\controllers\ErrorsController', 'error'. $key]);
+
+
+}
 
 function commentsCount(  $post_id)
 {
@@ -134,4 +160,18 @@ function getPostTags($post_id)
         $tagsArray[] = $factory->find('tags', 'id', $tag['tag_id']);
     }
     return $tagsArray;
+}
+function getRole($value, $key = 'id')
+{
+    global $container;
+    $role = $container->get(\App\models\Role::class);
+    return $role->getRole($value , $key);
+
+}
+function getRoles()
+{
+    global $container;
+    $role = $container->get(\App\models\Role::class);
+    return $role->getRoles();
+
 }

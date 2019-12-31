@@ -5,6 +5,7 @@ namespace App\controllers;
 
 
 use App\models\ImageManager;
+use App\models\Role;
 use Delight\Auth\Auth;
 use Respect\Validation\Exceptions\ValidationException;
 use Respect\Validation\Validator as v;
@@ -93,6 +94,15 @@ class UserController extends Controller
                         exit;
                     }
                 });
+
+                try {
+                    $this->auth->admin()->addRoleForUserById($userId, Role::USER);
+                }
+                catch (\Delight\Auth\UnknownIdException $e) {
+                    flash()->error('Unknown user ID');
+                    back();
+                    exit;
+                }
                 flash()->success('На вашу почту "' .$_POST['email']. '" отправлено письмо с подтверждением регистрации.
                                     Зайдите на вашу почту для завершения регистрации');
                 back();

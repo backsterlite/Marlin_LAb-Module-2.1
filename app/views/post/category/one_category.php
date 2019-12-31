@@ -35,11 +35,11 @@
                                 </ul>
                             </div>
                             <div class="details mt-20">
-                                <a href="/post/<?= $post['id']?>">
+                                <a href="<?= config('link')['post'].'slug/'. $post['slug'];?>">
                                     <h3><?= $post['title']?></h3>
                                 </a>
                                 <p><?= $post['description']?></p>
-                                <a class="button" href="/post/<?= $post['id']?>">Read More <i class="ti-arrow-right"></i></a>
+                                <a class="button" href="<?= config('link')['post'].'slug/'. $post['slug'];?>">Read More <i class="ti-arrow-right"></i></a>
                             </div>
                         </div>
                     </div>

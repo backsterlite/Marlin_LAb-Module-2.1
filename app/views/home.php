@@ -22,8 +22,8 @@
                     <img class="card-img rounded-0" src="<?= getImage('post', $featuredPost['image'])?>" alt="">
                 </div>
                 <div class="blog__slide__content">
-                    <a class="blog__slide__label" href="#">Show</a>
-                    <h3><a href="<?=config('link')['post'] . $featuredPost['slug'];?>"><?=$featuredPost['title']; ?></a></h3>
+                    <a class="blog__slide__label" href="<?=config('link')['post'] . 'slug/'. $featuredPost['slug'];?>">Show</a>
+                    <h3><a href="<?=config('link')['post'] .'slug/'. $featuredPost['slug'];?>"><?=$featuredPost['title']; ?></a></h3>
                     <p><?= diffDates(date('Y,m,d,H,i,s', strtotime($featuredPost['date'])), $now); ?></p>
                 </div>
             </div>
@@ -39,6 +39,9 @@
         <div class="row">
             <div class="col-lg-8">
                 <?php foreach ($posts as $post): ?>
+                    <?php d($post); ?>
+                <?php if($post['status'] == '1'): ?>
+
                 <div class="single-recent-blog-post">
                     <div class="thumb">
                         <img class="img-fluid" src="<?= getImage('post', $post['image']) ?>" alt="">
@@ -59,6 +62,7 @@
                         <a class="button" href="<?= config('link')['post'].'slug/'. $post['slug'];?>">Read More <i class="ti-arrow-right"></i></a>
                     </div>
                 </div>
+                <?php endif; ?>
                 <?php endforeach; ?>
             </div><!-- Start Blog Post Siddebar -->
             <?= $this->insert('partials/sidebar')?>

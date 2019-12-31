@@ -27,13 +27,14 @@
 
                                         </div>
                                     </div>
+                                    <?php d(getAllCategories()) ?>
                                     <div class="form-group">
                                         <label for="exampleFormControlSelect1">Выберите категорию</label>
                                         <div class="col-md-4 offset-4">
                                             <select class="form-control" name="category" id="exampleFormControlSelect1">
-                                                <option>Категория</option>
+
                                                 <?php foreach (getAllCategories() as $category): ?>
-                                                <option value="<?= $category['id']?>"><?= $category['title']?></option>
+                                                <option <?= ($category['id'] == '9')? 'selected': '';?> value="<?= $category['id']?>"><?= $category['title']?></option>
                                                 <?php endforeach; ?>
                                             </select>
                                         </div>

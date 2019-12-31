@@ -52,7 +52,7 @@ return[
         'tag'         => '/post/tag/',
         'home'        => '/',
         'userProfile' => '/user/profile/id/',
-        'category'    => '/category'
+        'category'    => '/category/'
     ]
     // Данные для входа
     /*

@@ -17,7 +17,7 @@
     </div>
 </section>
 <!--================ Hero sm Banner end =================-->
-        <?php if(components(\Delight\Auth\Auth::class)->getUserId() == $user['id']): ?>
+        <?php if(components(\Delight\Auth\Auth::class)->getUserId() == $user['id'] || components(\App\models\Role::class)->checkRoles()): ?>
 <!--================ Start Blog Post Area =================-->
 
 <section class="blog-post-area section-margin">
@@ -37,11 +37,11 @@
                                     </ul>
                                 </div>
                                 <div class="details mt-20">
-                                    <a href="<?=config('link')['post'] . $post['slug']?>">
+                                    <a href="<?=config('link')['post'] .'slug/'. $post['slug']?>">
                                         <h3><?= $post['title']?></h3>
                                     </a>
                                     <p><?= $post['description']?></p>
-                                    <a class="button1" href="<?= config('link')['post'] .'slug/'. $post['id']?>">Read More <i class="ti-arrow-right"></i></a>
+                                    <a class="button1" href="<?= config('link')['post'] .'slug/'. $post['slug']?>">Read More <i class="ti-arrow-right"></i></a>
                                     <a class="button1" href="<?=config('link')['post'] .'id/'. $post['id']?>/edit">Edit <i class="ti-pencil"></i></a>
                                     <a class="button1" href="<?=config('link')['post'] .'id/'. $post['id']?>/delete">Delete<i class="ti-trash"></i></a>
                                 </div>
