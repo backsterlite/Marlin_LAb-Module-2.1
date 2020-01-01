@@ -130,19 +130,46 @@ class Database
         return $sth->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getPaginated($table, $page = 1, $rows = 1)
+    public function getPaginated($table,$row, $page = 1, $rows = 1)
     {
         $select = $this->factory->newSelect();
         $select->cols(['*'])
             ->from($table)
             ->page($page)
             ->setPaging($rows)
-            ->orderBy(['id DESC']);
+            ->orderBy(["$row DESC"]);
         $sth = $this->pdo->prepare($select->getStatement());
 
         $sth->execute($select->getBindValues());
 
         return $sth->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function joinQuery($mainTable, $secondTable, $row, $value, $join)
+    {
+        $select = $this->factory->newSelect();
+
+        $select->cols([
+            'post_id',
+            'title',
+            'slug',
+            'content',
+            'user_id',
+            'date',
+            'image',
+            'status',
+            'is_featured',
+            'views',
+            'description'
+        ])
+            ->from($mainTable)
+            ->where("$row = :$row")
+
+            ->bindValue(":$row", $value)
+            ->join("$join", "$secondTable AS S", "$mainTable.post_id=S.id " );
+
+        $sth = $this->pdo->prepare( "CREATE OR REPLACE VIEW post_with_tags AS " .  $select->getStatement());
+
+        $sth->execute($select->getBindValues());
     }
 
     public function getCount($table, $row, $value)
@@ -178,15 +205,14 @@ class Database
 
             $select->cols(['*'])
                 ->from($tableOut)
-                ->orderBy(['id DESC']);
-                foreach ($values as $value)
-                {
-                    $select->where("$row = :$row")
-                        ->bindValue(":$row", $value);
-                }
+                ->orderBy(['id DESC'])
+                ->where("$row = :$row")
+                ->bindValues(["$row" => $values]);
+
         $sth = $this->pdo->prepare("CREATE OR REPLACE VIEW $tableIn AS " . $select->getStatement());
 
         $sth->execute($select->getBindValues());
+
     }
     public  function store($table, $data)
     {

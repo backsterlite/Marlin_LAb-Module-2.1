@@ -75,20 +75,20 @@ class PostController extends Controller
         $urlPattern ='?page=(:num)';
 
         $paginator = new Paginator($totalItems, $itemsPerPage, $currentPage, $urlPattern);
-        $postValues = $this->database->whereAll('post_tags', 'tag_id', $id);
-        if(!empty($postValues))
-        {
-            foreach ($postValues as $postValue)
-            {
-                $values[] = $postValue['post_id'];
-                $this->database->getAllWith('posts', 'postsT', 'id', $values);
+        $this->database->joinQuery('post_tags', 'posts', 'tag_id', $id, 'LEFT');
+
                 $tag = $this->database->find('tags', 'id', $id);
-                $posts = $this->database->getPaginated('postsT',  $currentPage, $itemsPerPage);
+                $posts = $this->database->getPaginated('post_with_tags', 'post_id',  $currentPage, $itemsPerPage);
+
                 $now = Carbon::now('Europe/Kiev');
-                echo $this->view->render('post/one_tag', compact('posts',
-                    'comments', 'now','paginator', 'tag'));
-            }
-        }
+                if(!empty($posts))
+                {
+                    echo $this->view->render('post/one_tag', compact('posts',
+                        'comments', 'now','paginator', 'tag'));
+                }
+
+
+
         $tag = $this->database->find('tags', 'id', $id);
         echo $this->view->render('post/empty_tag', compact('tag'));
 

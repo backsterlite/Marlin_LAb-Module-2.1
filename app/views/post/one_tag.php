@@ -24,7 +24,6 @@
         <div class="row">
             <div class="col-lg-8">
                 <div class="row">
-                    <?php d($posts); ?>
                     <?php foreach ($posts as $post): ?>
                         <div class="col-md-6">
                             <div class="single-recent-blog-post card-view">
@@ -32,7 +31,7 @@
                                     <img class="card-img rounded-0" src="<?= getImage('post', $post['image'])?>" alt="">
                                     <ul class="thumb-info">
                                         <li><a href="#"><i class="ti-user"></i><?= acert(getUser($post['user_id'])['username'], 10)?></a></li>
-                                        <li><a href="#"><i class="ti-themify-favicon"></i><?= commentsCount($post['id'])?> Comments</a></li>
+                                        <li><a href="#"><i class="ti-themify-favicon"></i><?= commentsCount($post['post_id'])?> Comments</a></li>
                                     </ul>
                                 </div>
                                 <div class="details mt-20">
@@ -40,7 +39,7 @@
                                         <h3><?= $post['title']?></h3>
                                     </a>
                                     <p><?= $post['description']?></p>
-                                    <a class="button" href="/post/<?= $post['id']?>">Read More <i class="ti-arrow-right"></i></a>
+                                    <a class="button" href="/post/<?= $post['post_id']?>">Read More <i class="ti-arrow-right"></i></a>
                                 </div>
                             </div>
                         </div>
