@@ -75,7 +75,20 @@ class PostController extends Controller
         $urlPattern ='?page=(:num)';
 
         $paginator = new Paginator($totalItems, $itemsPerPage, $currentPage, $urlPattern);
-        $this->database->joinQuery('post_tags', 'posts', 'tag_id', $id, 'LEFT');
+        $cols =[
+            'post_id',
+            'title',
+            'slug',
+            'content',
+            'user_id',
+            'date',
+            'image',
+            'status',
+            'is_featured',
+            'views',
+            'description'
+        ];
+        $this->database->joinQueryWithCreateView('post_tags', 'posts', $cols, 'tag_id', $id, 'LEFT');
 
                 $tag = $this->database->find('tags', 'id', $id);
                 $posts = $this->database->getPaginated('post_with_tags', 'post_id',  $currentPage, $itemsPerPage);

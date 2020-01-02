@@ -144,23 +144,11 @@ class Database
 
         return $sth->fetchAll(PDO::FETCH_ASSOC);
     }
-    public function joinQuery($mainTable, $secondTable, $row, $value, $join)
+    public function joinQueryWithCreateView($mainTable, $secondTable, $cols, $row, $value, $join)
     {
         $select = $this->factory->newSelect();
 
-        $select->cols([
-            'post_id',
-            'title',
-            'slug',
-            'content',
-            'user_id',
-            'date',
-            'image',
-            'status',
-            'is_featured',
-            'views',
-            'description'
-        ])
+        $select->cols($cols)
             ->from($mainTable)
             ->where("$row = :$row")
 
@@ -199,21 +187,7 @@ class Database
         $sth->execute($select->getBindValues());
        return $sth->fetchAll(PDO::FETCH_ASSOC);
     }
-    public function getAllWith($tableOut, $tableIn, $row, $values)
-    {
-        $select = $this->factory->newSelect();
 
-            $select->cols(['*'])
-                ->from($tableOut)
-                ->orderBy(['id DESC'])
-                ->where("$row = :$row")
-                ->bindValues(["$row" => $values]);
-
-        $sth = $this->pdo->prepare("CREATE OR REPLACE VIEW $tableIn AS " . $select->getStatement());
-
-        $sth->execute($select->getBindValues());
-
-    }
     public  function store($table, $data)
     {
         $insert = $this->factory->newInsert();
