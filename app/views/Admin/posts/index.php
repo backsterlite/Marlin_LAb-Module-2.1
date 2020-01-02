@@ -77,8 +77,5 @@
     </div>
 </div>
 <!-- /.box-body -->
-<div class="box-footer">
-    По вопросам к главному администратору.
-</div>
-<!-- /.box-footer-->
+
 

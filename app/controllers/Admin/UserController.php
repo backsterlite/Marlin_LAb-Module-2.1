@@ -5,8 +5,7 @@ namespace App\controllers\Admin;
 
 
 use App\models\ImageManager;
-use Delight\Auth\Auth;
-use Delight\Auth\AuthError;
+use App\models\Role;
 use Respect\Validation\Exceptions\ValidationException;
 use Respect\Validation\Validator as v;
 
@@ -14,11 +13,13 @@ class UserController extends Controller
 {
 
     private $manager;
+    private $role;
 
-    public function __construct(Auth $auth, ImageManager $manager)
+    public function __construct( ImageManager $manager, Role $role)
     {
         parent::__construct();
         $this->manager = $manager;
+        $this->role = $role;
     }
 
     public function index()
@@ -115,6 +116,32 @@ class UserController extends Controller
             }
         }
 
+    }
+    public function edit($id)
+    {
+
+        $user = $this->database->find('users', 'id', $id);
+        echo $this->view->render('Admin/user/edit', compact('user'));
+    }
+
+    public function update($id)
+    {
+        if($this->role->isAdmin())
+        {
+            if($this->role->changeRole($_POST['current-role'], $_POST['new-role'], $id))
+            {
+                flash()->success('Изминения приняты');
+                back();
+                exit;
+            }
+            flash()->error('Операция провалилась. Попробуйте позже');
+            back();
+            exit;
+        }
+
+        flash()->error('У ВАС не достаточно прав');
+        back();
+        exit;
     }
 
     public function changeStatus($id)

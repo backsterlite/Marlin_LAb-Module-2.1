@@ -75,6 +75,8 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
         $r->get( 'users', ['App\controllers\Admin\UserController', 'index' ]);
         $r->get( 'user/create', ['App\controllers\Admin\UserController', 'create' ]);
         $r->post( 'user/store', ['App\controllers\Admin\UserController', 'store' ]);
+        $r->get( 'user/id/{id:\d+}/edit', ['App\controllers\Admin\UserController', 'edit' ]);
+        $r->post( 'user/id/{id:\d+}/update', ['App\controllers\Admin\UserController', 'update' ]);
 
         $r->get( 'user/status/id/{id:\d+}', ['App\controllers\Admin\UserController', 'changeStatus' ]);
     });

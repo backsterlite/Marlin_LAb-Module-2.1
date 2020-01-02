@@ -13,7 +13,7 @@ class Controller extends MainController
     {
         $this->auth = components(\Delight\Auth\Auth::class);
         parent::__construct();
-        if(!$this->auth->hasRole(\App\models\Role::ADMIN))
+        if(!$this->auth->hasAnyRole(\App\models\Role::ADMIN, \App\models\Role::MODERATOR ))
         {
             abort(404);
             exit;

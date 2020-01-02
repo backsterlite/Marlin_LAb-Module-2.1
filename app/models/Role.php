@@ -18,6 +18,10 @@ final class Role
     {
         $this->auth = $auth;
     }
+    public function isAdmin()
+    {
+        return $this->auth->hasRole(self::ADMIN);
+    }
 
     public function checkRoles()
     {
@@ -27,19 +31,19 @@ final class Role
     public function changeRole($currentRole, $newRole, $userId)
     {
         try {
-            $this->auth->admin()->removeRoleForUserById($userId, $this->getRole($currentRole, 'title'));
+            $this->auth->admin()->removeRoleForUserById($userId, $currentRole);
         }
         catch (\Delight\Auth\UnknownIdException $e) {
             flash()->error('Unknown user ID');
         }
 
         try {
-            $this->auth->admin()->addRoleForUserById($userId, $this->getRole($newRole, 'title'));
+            $this->auth->admin()->addRoleForUserById($userId, $newRole);
         }
         catch (\Delight\Auth\UnknownIdException $e) {
             die('Unknown user ID');
         }
-
+        return true;
     }
 
     public function getRoles()
@@ -60,21 +64,14 @@ final class Role
         ];
     }
 
-    public function getRole($value, $key = 'id')
+    public function getRole($value)
     {
-        if($key == 'id')
-        {
+
             foreach($this->getRoles() as $role)
             {
                 if($role['id'] == $value) return $role['title'];
             }
-        }elseif($key == 'title')
-        {
-            foreach($this->getRoles() as $role)
-            {
-                if($role['title'] == $value) return $role['id'];
-            }
-        }
+
     }
 
 

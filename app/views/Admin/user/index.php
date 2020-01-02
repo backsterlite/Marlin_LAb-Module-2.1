@@ -30,7 +30,7 @@
                         <td><?= $user['username']?></td>
                         <td><?= $user['email']?></td>
                         <td><?= ($user['status'] == '0')? 'NORMAL<br><a class="text-success" href="/admin/user/status/id/'. $user['id'] . '?status=2' .'"><i class="fa fa-thumbs-o-up"></i></a>':'BANNED<br><a class="text-danger" href="/admin/user/status/id/'. $user['id'] . '?status=0' .'"><i class="fa fa-thumbs-o-down"></i></a>'?></td>
-                        <td><?= getRole($user['roles_mask'], 'id')?></td>
+                        <td><?= getRole($user['roles_mask'])?></td>
                         <td>
                             <img src="<?= getImage('user', $user['image'])?>" width="200" alt="">
                         </td>
@@ -38,6 +38,9 @@
                         <td>
                             <a href="<?= config('link')['autor']. $user['id']?>" class="btn btn-info">
                                 <i class="fa fa-eye"></i>
+                            </a>
+                            <a href="/admin/user/id/<?= $user['id'] ?>/edit" class="btn btn-warning">
+                                <i class="fa fa-pencil"></i>
                             </a>
                         </td>
                     </tr>
@@ -61,8 +64,5 @@
     </div>
 </div>
 <!-- /.box-body -->
-<div class="box-footer">
-    По вопросам к главному администратору.
-</div>
-<!-- /.box-footer-->
+
 
